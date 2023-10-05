@@ -12,7 +12,7 @@ extension URLSession: URLSessionable {
     
     static let mockSession = MockURLSession()
     
-    func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
+    public func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
             .map(\.data)
             .decode(type: T.self, decoder: JSONDecoder())

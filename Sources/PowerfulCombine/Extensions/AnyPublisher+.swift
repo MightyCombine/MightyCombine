@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 
-extension AnyPublisher where Failure: Error {
+public extension AnyPublisher where Failure: Error {
 
-    var asyncThrows: Output {
+     var asyncThrows: Output {
         get async throws {
             try await withCheckedThrowingContinuation { continuation in
                 var cancellable: AnyCancellable?

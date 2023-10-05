@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 
-struct MockURLSession: URLSessionable {
+public struct MockURLSession: URLSessionable {
     
-    func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
+    public func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
         Empty()
             .eraseToAnyPublisher()
     }

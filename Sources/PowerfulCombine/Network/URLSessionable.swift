@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol URLSessionable {
+public protocol URLSessionable {
     
     func request<T: Decodable>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error>
 }
