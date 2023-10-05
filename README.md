@@ -1,4 +1,4 @@
-# PowerfulCombine
+# AlmightyCombine
 
 ## Example
 
