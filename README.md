@@ -1,4 +1,4 @@
-# AlmightyCombine
+# MightyCombine
 
 ## Example
 
@@ -23,7 +23,7 @@ Task {
 ### Inject Success
 ```swift 
 // Given
-let network = URLSession.mockSession
+let session = URLSession.mockSession
 let url = URL(string: "https://api.github.com/users/octocat")!
 var urlRequest: URLRequest { .init(url: url) }
 
