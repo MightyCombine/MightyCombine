@@ -10,7 +10,7 @@ import Combine
 
 extension URLSession: URLSessionable {
     
-    static let mockSession = MockURLSession()
+    public static let mockSession = MockURLSession()
     
     public func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
