@@ -4,23 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "PowerfulCombine",
+    name: "MightyCombine",
     platforms: [
         .iOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "PowerfulCombine",
-            targets: ["PowerfulCombine"]),
+            name: "MightyCombine",
+            targets: ["MightyCombine"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "PowerfulCombine"),
+            name: "MightyCombine"),
         .testTarget(
-            name: "PowerfulCombineTests",
-            dependencies: ["PowerfulCombine"]),
+            name: "MightyCombineTests",
+            dependencies: ["MightyCombine"]),
     ]
 )
