@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public extension AnyPublisher where Failure: Error {
+public extension AnyPublisher {
 
      var asyncThrows: Output {
         get async throws {
