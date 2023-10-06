@@ -22,8 +22,8 @@ final class PowerfulCombineTests: XCTestCase {
     
     func test_injectSuccess() throws {
         
-        let expect = User(login: "octopus", id: 112233)
-        sut.getUser = { _ in .mock(.success(expect)) }
+        let mockData = User(login: "octopus", id: 112233)
+        sut.getUser = { _ in .mock(.success(mockData)) }
         
         Task {
             // When
@@ -32,7 +32,7 @@ final class PowerfulCombineTests: XCTestCase {
             // Then
             XCTAssertNotNil(user)
             if let user {
-                XCTAssertEqual(expect.id, user.id)
+                XCTAssertEqual(mockData.id, user.id)
             }
         }
     }
