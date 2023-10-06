@@ -24,6 +24,7 @@ final class PowerfulCombineTests: XCTestCase {
         
         let expect = User(login: "octopus", id: 112233)
         sut.getUser = { _ in .mock(.success(expect)) }
+        
         Task {
             // When
             let user = try? await sut.getUser("octopus").asyncThrows

@@ -5,15 +5,13 @@
 ### Inject Fail
 ```swift
 // Given
-let session = URLSession.mockSession
-let url = URL(string: "https://api.github.com/users/octocat")!
-var urlRequest: URLRequest { .init(url: url) }
+var sut: UserNetwork = .init()
+
+sut.getUser = { _ in .mock(.fail(NSError())) }
 
 Task {
     // When
-    let user: User? = try? await session.request(urlRequest)
-        .mock(.fail(NSError()))
-        .asyncThrows
+    let user = try? await sut.getUser("octopus").asyncThrows
     
     // Then
     XCTAssertNil(user)
@@ -23,16 +21,14 @@ Task {
 ### Inject Success
 ```swift 
 // Given
-let session = URLSession.mockSession
-let url = URL(string: "https://api.github.com/users/octocat")!
-var urlRequest: URLRequest { .init(url: url) }
+var sut: UserNetwork = .init()
+
+let expect = User(login: "octopus", id: 112233)
+sut.getUser = { _ in .mock(.success(expect)) }
 
 Task {
     // When
-    let expect = User(login: "octocat", id: 20506834)
-    let user: User? = try? await session.request(urlRequest)
-        .mock(.success(expect))
-        .asyncThrows
+    let user = try? await sut.getUser("octopus").asyncThrows
     
     // Then
     XCTAssertNotNil(user)
