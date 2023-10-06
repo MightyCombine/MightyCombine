@@ -1,9 +1,10 @@
-# MightyCombine
+# 💪 MightyCombine
 
-## Example1: Use async/ await with Combine
-### AnyPublisher
+## ✔ Use async/ await with Combine
+### AnyPublisher -> async/await throws
 ```swift 
 let userNetwork: UserNetwork = .init()
+
 userNetwork.getUser("octopus")
     .receive(on: DispatchQueue.main)
     .sink { _ in
@@ -11,18 +12,14 @@ userNetwork.getUser("octopus")
     } receiveValue: { user in
         print(user)
     }.store(in: &store)
-```
 
-### AnyPublisher -> async/await throws
-```swift 
-let userNetwork: UserNetwork = .init()
 Task {
     let user = try? await sut.getUser("octopus").asyncThrows
     print(user)
 }
 ```
 
-## Example2: Inject mock easily for XCTest
+## ✔ Inject mock easily for XCTest
 ### Inject Fail
 ```swift
 // Given
