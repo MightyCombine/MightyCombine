@@ -1,5 +1,5 @@
 import XCTest
-@testable import PowerfulCombine
+@testable import MightyCombine
 
 final class PowerfulCombineTests: XCTestCase {
     
