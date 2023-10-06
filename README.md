@@ -19,7 +19,7 @@ textField.textPublisher
     }.store(in: &store)
 ```
 
-## ✔ Support async/ await
+## ✔ Support async/ await and throws
 ```swift 
 let userNetwork: UserNetwork = .init()
 
