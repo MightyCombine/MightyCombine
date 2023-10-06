@@ -11,4 +11,6 @@ import Combine
 public protocol URLSessionable {
     
     func request<T: Decodable>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error>
+    
+    func request<T: Decodable>(_ urlRequest: URLRequest, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error>
 }
