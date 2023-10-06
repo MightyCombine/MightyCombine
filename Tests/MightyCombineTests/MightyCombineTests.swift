@@ -9,7 +9,7 @@ final class PowerfulCombineTests: XCTestCase {
     
     func test_injectFail() throws {
         
-        sut.getUser = { _ in .mock(.fail(NSError())) }
+        sut.getUser = { _ in .inject(.fail(NSError())) }
         
         Task {
             // When
@@ -23,7 +23,7 @@ final class PowerfulCombineTests: XCTestCase {
     func test_injectSuccess() throws {
         
         let mockData = User(login: "octopus", id: 112233)
-        sut.getUser = { _ in .mock(.success(mockData)) }
+        sut.getUser = { _ in .inject(.success(mockData)) }
         
         Task {
             // When
