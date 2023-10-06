@@ -1,5 +1,20 @@
 # 💪 MightyCombine
 
+## ✔ Use with UIKit
+```swift 
+button.eventPublisher(for: .touchUpInside)
+    .receive(on: DispatchQueue.main)
+    .sink { _ in
+        print("TAP")
+    }.store(in: &store)
+    
+textField.textPublisher
+    .receive(on: DispatchQueue.main)
+    .sink { text in
+        print(text)
+    }.store(in: &store)
+```
+
 ## ✔ Use async/ await with Combine
 ### AnyPublisher -> async/await throws
 ```swift 
