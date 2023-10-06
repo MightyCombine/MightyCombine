@@ -16,7 +16,20 @@ extension URLSession: URLSessionable {
         self.dataTaskPublisher(for: urlRequest)
             .map(\.data)
             .decode(type: T.self, decoder: JSONDecoder())
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    public func request<T>(_ urlRequest: URLRequest, responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
+        self.dataTaskPublisher(for: urlRequest)
+            .tryMap { (data, response) -> Data in
+                if let response = response as? HTTPURLResponse {
+                    try responseHandler(response)
+                }
+                return data
+            }
+            .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

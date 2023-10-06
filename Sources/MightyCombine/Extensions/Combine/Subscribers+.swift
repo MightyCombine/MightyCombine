@@ -10,10 +10,8 @@ import Combine
 public extension Subscribers.Completion {
     
     var error: Error? {
-        
-        guard case let .failure(failure) = self else {
-            return nil
-        }
+        guard case let .failure(failure) = self 
+        else { return nil }
         return failure
     }
 }
