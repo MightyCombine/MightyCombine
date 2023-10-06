@@ -10,7 +10,7 @@ import Combine
 
 public extension AnyPublisher {
     
-    static func mock<T>(_ mock: NetworkMock<T>) -> AnyPublisher<T, Error> {
+    static func inject<T>(_ mock: NetworkMock<T>) -> AnyPublisher<T, Error> {
         switch mock {
         case .success(let model):
             return Just(model)
