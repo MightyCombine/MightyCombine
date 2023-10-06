@@ -10,8 +10,8 @@ import Combine
 
 public extension UIButton {
     
-    var tapPublisher: AnyPublisher<Void, Never> {
-        controlPublisher(for: .touchUpInside)
+    func eventPublisher(for event: UIControl.Event) -> AnyPublisher<Void, Never> {
+        controlPublisher(for: event)
             .map { _ in }
             .eraseToAnyPublisher()
     }
