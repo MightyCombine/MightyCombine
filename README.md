@@ -26,8 +26,7 @@ Task {
 ### Inject Fail
 ```swift
 // Given
-var sut: UserNetwork = .init()
-
+let sut: UserNetwork = .init()
 sut.getUser = { _ in .mock(.fail(NSError())) }
 
 Task {
@@ -42,8 +41,7 @@ Task {
 ### Inject Success
 ```swift 
 // Given
-var sut: UserNetwork = .init()
-
+let sut: UserNetwork = .init()
 let mockData = User(login: "octopus", id: 112233)
 sut.getUser = { _ in .mock(.success(mockData)) }
 
