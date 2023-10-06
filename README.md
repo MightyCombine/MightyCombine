@@ -24,7 +24,7 @@ Task {
 ```swift
 // Given
 let sut: UserNetwork = .init()
-sut.getUser = { _ in .mock(.fail(NSError())) }
+sut.getUser = { _ in .inject(.fail(NSError())) }
 
 Task {
     // When
@@ -40,7 +40,7 @@ Task {
 // Given
 let sut: UserNetwork = .init()
 let mockData = User(login: "octopus", id: 112233)
-sut.getUser = { _ in .mock(.success(mockData)) }
+sut.getUser = { _ in .inject(.success(mockData)) }
 
 Task {
     // When
