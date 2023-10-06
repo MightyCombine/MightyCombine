@@ -56,7 +56,3 @@ final class AsyncThrowsTest: XCTestCase {
         }
     }
 }
-
-enum TestError: Error {
-    case testError
-}
