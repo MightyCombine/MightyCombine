@@ -13,7 +13,7 @@ final class Subscribers_Test: XCTestCase {
     
     var store = Set<AnyCancellable>()
 
-    func test_Error_Failure_Should_Same() throws {
+    func test_var_error() throws {
         Fail<Any, TestError>(error: TestError.testError)
             .receive(on: DispatchQueue.main)
             .sink { completion in
