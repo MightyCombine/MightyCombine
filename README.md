@@ -1,6 +1,6 @@
 # 💪 MightyCombine
 
-## ✔ Use with UIKit
+## ✔ UIKit
 ```swift 
 button.eventPublisher(for: .touchUpInside)
     .receive(on: DispatchQueue.main)
@@ -15,7 +15,7 @@ textField.textPublisher
     }.store(in: &store)
 ```
 
-## ✔ Use async/ await with Combine
+## ✔ async/ await
 ```swift 
 let userNetwork: UserNetwork = .init()
 
@@ -33,7 +33,7 @@ Task {
 }
 ```
 
-## ✔ Inject mock easily for XCTest
+## ✔ XCTest
 ```swift
 // Given
 let sut: UserNetwork = .init()
