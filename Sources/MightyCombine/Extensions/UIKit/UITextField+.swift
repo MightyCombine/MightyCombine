@@ -11,12 +11,8 @@ import Combine
 public extension UITextField {
     
     var textPublisher: AnyPublisher<String, Never> {
-        NotificationCenter.default.publisher(
-            for: UITextField.textDidChangeNotification,
-            object: self
-        )
-        .compactMap { $0.object as? UITextField }
-        .map { $0.text ?? "" }
-        .eraseToAnyPublisher()
+        controlPublisher(for: .editingChanged)
+            .map { _ in self.text ?? "" }
+            .eraseToAnyPublisher()
     }
 }
