@@ -16,7 +16,6 @@ textField.textPublisher
 ```
 
 ## ✔ Use async/ await with Combine
-### AnyPublisher -> async/await throws
 ```swift 
 let userNetwork: UserNetwork = .init()
 
@@ -35,7 +34,6 @@ Task {
 ```
 
 ## ✔ Inject mock easily for XCTest
-### Inject Fail
 ```swift
 // Given
 let sut: UserNetwork = .init()
@@ -50,7 +48,6 @@ Task {
 }
 ```
 
-### Inject Success
 ```swift 
 // Given
 let sut: UserNetwork = .init()
