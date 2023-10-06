@@ -28,7 +28,7 @@ userNetwork.getUser("octopus")
     }.store(in: &store)
 
 Task {
-    let user = try? await sut.getUser("octopus").asyncThrows
+    let user = try? await userNetwork.getUser("octopus").asyncThrows
     print(user)
 }
 ```
