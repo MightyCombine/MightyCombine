@@ -1,5 +1,9 @@
 # 💪 MightyCombine
 
+> **"The Might Combine will set you free"**
+
+We build powerful and convenient features using Combine and Swift only.
+
 ## ✔ Support UIKit
 ```swift 
 button.eventPublisher(for: .touchUpInside)
