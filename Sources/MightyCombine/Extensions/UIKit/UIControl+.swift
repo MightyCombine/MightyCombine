@@ -11,7 +11,7 @@ import Combine
 extension UIControl {
     
     func controlPublisher(for event: UIControl.Event) -> UIControl.EventPublisher {
-        return UIControl.EventPublisher(control: self, event: event)
+        .init(control: self, event: event)
     }
 }
 
@@ -42,17 +42,17 @@ extension UIControl {
             self.subscriber = subscrier
             self.event = event
             
-            control.addTarget(self, action: #selector(eventDidOccur), for: event)
+            control.addTarget(self, action: #selector(handleEvent), for: event)
         }
         
         func request(_ demand: Subscribers.Demand) {}
         
         func cancel() {
             subscriber = nil
-            control.removeTarget(self, action: #selector(eventDidOccur), for: event)
+            control.removeTarget(self, action: #selector(handleEvent), for: event)
         }
         
-        @objc func eventDidOccur() {
+        @objc func handleEvent() {
             _ = subscriber?.receive(control)
         }
     }
