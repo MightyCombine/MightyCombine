@@ -25,6 +25,5 @@ final class Subscribers_Test: XCTestCase {
             } receiveValue: { _ in
                 
             }.store(in: &store)
-
     }
 }
