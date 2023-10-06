@@ -1,6 +1,6 @@
 # 💪 MightyCombine
 
-> **"The Might Combine will set you free"**
+> **"Combine will set you free"**
 
 We build powerful and convenient features using Combine and Swift only.
 
