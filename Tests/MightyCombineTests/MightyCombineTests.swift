@@ -5,7 +5,7 @@ import Combine
 final class PowerfulCombineTests: XCTestCase {
     
     // Given
-    var sut: UserNetwork = .init()
+    let sut: UserNetwork = .init()
     
     func test_injectFail() throws {
         
