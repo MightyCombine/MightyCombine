@@ -2,7 +2,7 @@ import XCTest
 import Combine
 @testable import MightyCombine
 
-final class PowerfulCombineTests: XCTestCase {
+final class NetworkMockTest: XCTestCase {
     
     // Given
     let sut: UserNetwork = .init()
