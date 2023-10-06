@@ -8,24 +8,24 @@
 import UIKit
 import Combine
 
-extension UIControl {
+public extension UIControl {
     
     func controlPublisher(for event: UIControl.Event) -> UIControl.EventPublisher {
         .init(control: self, event: event)
     }
 }
 
-extension UIControl {
+public extension UIControl {
     
     struct EventPublisher: Publisher {
         
-        typealias Output = UIControl
-        typealias Failure = Never
+        public typealias Output = UIControl
+        public typealias Failure = Never
         
         let control: UIControl
         let event: UIControl.Event
         
-        func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, UIControl == S.Input {
+        public func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, UIControl == S.Input {
             let subscription = EventSubscription(control: control, subscrier: subscriber, event: event)
             subscriber.receive(subscription: subscription)
         }

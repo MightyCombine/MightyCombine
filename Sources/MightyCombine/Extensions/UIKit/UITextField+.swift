@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-extension UITextField {
+public extension UITextField {
     
     var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter.default.publisher(
