@@ -10,6 +10,8 @@ import Combine
 
 public struct MockURLSession: URLSessionable {
     
+    public init() { }
+    
     public func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
         Empty()
             .eraseToAnyPublisher()
