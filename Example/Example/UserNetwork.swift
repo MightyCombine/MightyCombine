@@ -18,7 +18,7 @@ struct UserNetwork {
     
     static func testBuild() -> Self {
         let data = try? JSONEncoder().encode(User(login: "abc", id: 123))
-        let session = MockURLSession(mock: .init(data: data))
+        let session = MockURLSession(mock: .data(data!))
         return .init(session: session)
     }
     
