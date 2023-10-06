@@ -1,19 +1,19 @@
 import XCTest
+import Combine
 @testable import MightyCombine
 
 final class PowerfulCombineTests: XCTestCase {
     
     // Given
-    let session = URLSession.mockSession
-    let url = URL(string: "https://api.github.com/users/octocat")!
-    var urlRequest: URLRequest { .init(url: url) }
+    var sut: UserNetwork = .init()
     
     func test_injectFail() throws {
+        
+        sut.getUser = { _ in .mock(.fail(NSError())) }
+        
         Task {
             // When
-            let user: User? = try? await session.request(urlRequest)
-                .mock(.fail(NSError()))
-                .asyncThrows
+            let user = try? await sut.getUser("octopus").asyncThrows
             
             // Then
             XCTAssertNil(user)
@@ -21,12 +21,13 @@ final class PowerfulCombineTests: XCTestCase {
     }
     
     func test_injectSuccess() throws {
+        
+        let expect = User(login: "octopus", id: 112233)
+        sut.getUser = { _ in .mock(.success(expect)) }
+        
         Task {
             // When
-            let expect = User(login: "octocat", id: 20506834)
-            let user: User? = try? await session.request(urlRequest)
-                .mock(.success(expect))
-                .asyncThrows
+            let user = try? await sut.getUser("octopus").asyncThrows
             
             // Then
             XCTAssertNotNil(user)
@@ -34,6 +35,21 @@ final class PowerfulCombineTests: XCTestCase {
                 XCTAssertEqual(expect.id, user.id)
             }
         }
+    }
+}
+
+class UserNetwork {
+    
+    let session: URLSessionable
+    
+    init(session: URLSessionable = URLSession.shared) {
+        self.session = session
+    }
+    
+    lazy var getUser: (String) -> AnyPublisher<User, Error> = { [weak self] username in
+        let urlString = "https://api.github.com/users/" + username
+        let request = URLRequest(url: .init(string: urlString)!)
+        return self!.session.request(request)
     }
 }
 
