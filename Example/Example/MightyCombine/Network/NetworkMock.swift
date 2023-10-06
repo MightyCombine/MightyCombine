@@ -7,6 +7,6 @@
 
 import Foundation
 
-public enum NetworkMock<T> {
-    case success(T), fail(Error)
+public enum NetworkMock {
+    case success(Data), fail(Error)
 }

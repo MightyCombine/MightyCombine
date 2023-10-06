@@ -32,16 +32,22 @@ public extension AnyPublisher {
         }
     }
     
-    func mock(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
+    func mock(_ mock: NetworkMock) -> AnyPublisher<Output, Failure> {
+        
         switch mock {
-        case .success(let model):
-            return Just(model)
+        case .success(let data):
+            guard let output = Output.self as? Decodable.Type,
+                  let decoded = try? JSONDecoder().decode(output.self, from: data)
+            else { return Empty().eraseToAnyPublisher() }
+            
+            return Just(decoded as! Output)
                 .setFailureType(to: Failure.self)
                 .eraseToAnyPublisher()
         case .fail(let error):
-            return Fail(error: error as! Failure)
+            guard let error = error as? Failure
+            else { return Empty().eraseToAnyPublisher() }
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
     }
 }
-
