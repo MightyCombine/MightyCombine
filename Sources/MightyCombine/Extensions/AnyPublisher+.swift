@@ -9,38 +9,47 @@ import Foundation
 import Combine
 
 public extension AnyPublisher {
+    
+    static func mock<T>(_ mock: NetworkMock<T>) -> AnyPublisher<T, Error> {
+        switch mock {
+        case .success(let model):
+            return Just(model)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        case .fail(let error):
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+    }
 
      var asyncThrows: Output {
         get async throws {
             try await withCheckedThrowingContinuation { continuation in
                 var cancellable: AnyCancellable?
+                var finishedWithoutValue = true
                 cancellable = first()
                     .subscribe(on: DispatchQueue.main)
                     .sink { completion in
                         switch completion {
                         case .finished:
-                            break
+                            if finishedWithoutValue {
+                                continuation.resume(throwing: AnyPublisherError.finishedWithoutValue)
+                            }
                         case .failure(let error):
                             continuation.resume(throwing: error)
                         }
                         cancellable?.cancel()
                     } receiveValue: { value in
+                        finishedWithoutValue = false
                         continuation.resume(with: .success(value))
                     }
-                
             }
         }
     }
     
-    func mock(_ mock: NetworkMock) -> AnyPublisher<Output, Failure> {
-        
+    func mock(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
         switch mock {
-        case .success(let data):
-            guard let output = Output.self as? Decodable.Type,
-                  let decoded = try? JSONDecoder().decode(output.self, from: data)
-            else { return Empty().eraseToAnyPublisher() }
-            
-            return Just(decoded as! Output)
+        case .success(let model):
+            return Just(model)
                 .setFailureType(to: Failure.self)
                 .eraseToAnyPublisher()
         case .fail(let error):
@@ -50,4 +59,8 @@ public extension AnyPublisher {
                 .eraseToAnyPublisher()
         }
     }
+}
+
+enum AnyPublisherError: Error {
+    case finishedWithoutValue
 }
