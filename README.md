@@ -1,7 +1,5 @@
 # 💪 MightyCombine
 
-> **"Combine will set you free"**
-
 We build powerful and convenient features using Combine and Swift only.
 
 ## ✔ Support UIKit
