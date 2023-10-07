@@ -32,7 +32,7 @@ final class EndPointTest: XCTestCase {
             .httpHeaders(headers)
             .httpBody(body)
             .httpMethod(.get)
-            .urlRequest()
+            .urlRequest
     }
     
     // Then
