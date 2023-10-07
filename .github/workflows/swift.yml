@@ -2,37 +2,18 @@ name: XCTest
 
 on:
   push:
-    branches:
-      - main  # Change this to the branch you want to trigger the workflow on
+    branches: [ main ]
 
 jobs:
   build:
+    
     runs-on: macOS-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Swift
-      run: |
-        brew update
-        brew install swift  # Installs the latest version of Swift using Homebrew
-
-    - name: Build
-      run: swift build
-
-    - name: Test
-      run: swift test
-
-    - name: Archive Test Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: .build/test-results.xml  # Modify this path if necessary
-
-    - name: Publish Test Results
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: .build/test-results.xml  # Modify this path if necessary
+    - uses: actions/checkout@v1
+    - name: Switch to Xcode 15
+      run: sudo xcode-select --switch /Applications/Xcode_15.0.app
+    - name: Generate xcodeproj
+      run: swift package generate-xcodeproj
+    - name: Run tests
+      run: xcodebuild test -destination 'name=iPhone 14' -scheme 'MightyCombine-Package'
