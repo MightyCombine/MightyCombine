@@ -1,5 +1,7 @@
 # 💪 MightyCombine
 
+[![XCTest](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml/badge.svg)](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml)
+
 We build powerful and convenient features using Combine and Swift only.
 
 ## ✔ Support UIKit
