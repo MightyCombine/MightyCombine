@@ -16,7 +16,7 @@ public struct EndPoint {
     var body: [String: Any]?
     var method: HttpMethod
     
-    init(
+    public init(
         _ baseURL: String,
         paths: [String]? = nil,
         queries: [String: String]? = nil,
@@ -32,7 +32,7 @@ public struct EndPoint {
         self.method = method
     }
     
-    var urlRequest: () -> URLRequest {{
+    public var urlRequest: () -> URLRequest {{
         .init(baseURL)
         .urlPaths(paths)
         .urlQueries(queries)
