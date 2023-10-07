@@ -16,7 +16,6 @@ extension URLSession: URLSessionable {
         self.dataTaskPublisher(for: urlRequest)
             .map(\.data)
             .decode(type: T.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -29,7 +28,6 @@ extension URLSession: URLSessionable {
                 return data
             }
             .decode(type: T.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }
