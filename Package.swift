@@ -32,23 +32,32 @@ let package = Package(
         .target(
             name: "MightySwift"
         ),
-        .testTarget(
-            name: "MightyCombineTests",
+        .target(
+            name: "TestSource",
             dependencies: [
                 "MightyCombine"
             ]
         ),
         .testTarget(
+            name: "MightyCombineTests",
+            dependencies: [
+                "MightyCombine",
+                "TestSource"
+            ]
+        ),
+        .testTarget(
             name: "MightySwiftTests",
             dependencies: [
-                "MightySwift"
+                "MightySwift",
+                "TestSource"
             ]
         ),
         .testTarget(
             name: "IntegrationTests",
             dependencies: [
                 "MightySwift",
-                "MightyCombine"
+                "MightyCombine",
+                "TestSource"
             ]
         )
     ]

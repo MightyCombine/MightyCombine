@@ -1,6 +1,7 @@
 import XCTest
 import Combine
 @testable import MightyCombine
+@testable import TestSource
 
 final class NetworkMockTest: XCTestCase {
     
