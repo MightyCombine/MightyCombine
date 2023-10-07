@@ -32,12 +32,12 @@ public struct EndPoint {
         self.method = method
     }
     
-    public var urlRequest: () -> URLRequest {{
+    public var urlRequest: URLRequest {
         .init(baseURL)
         .urlPaths(paths)
         .urlQueries(queries)
         .httpHeaders(headers)
         .httpBody(body)
         .httpMethod(method)
-    }}
+    }
 }
