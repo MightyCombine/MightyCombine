@@ -1,8 +1,10 @@
 # 💪 MightyCombine
 
 [![XCTest](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml/badge.svg)](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml)
+![Static Badge](https://img.shields.io/badge/iOS-v13-blue)
+![Static Badge](https://img.shields.io/badge/Swift-v5.4-orange)
 
-We build powerful and convenient features using Combine and Swift only.
+> We build powerful and convenient features using Combine and Swift only.
 
 ## ✔ Support UIKit
 ```swift 
