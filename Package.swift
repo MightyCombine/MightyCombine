@@ -16,6 +16,12 @@ let package = Package(
                 "MightyCombine"
             ]
         ),
+        .library(
+            name: "MightySwift",
+            targets: [
+                "MightySwift"
+            ]
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
