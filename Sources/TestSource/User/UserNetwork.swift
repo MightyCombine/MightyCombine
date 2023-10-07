@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-@testable import MightyCombine
+import MightyCombine
 
 class UserNetwork {
     

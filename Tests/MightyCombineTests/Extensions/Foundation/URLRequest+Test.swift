@@ -8,6 +8,7 @@
 import XCTest
 import Combine
 @testable import MightyCombine
+@testable import TestSource
 
 final class URLRequest_Test: XCTestCase {
     
@@ -21,7 +22,7 @@ final class URLRequest_Test: XCTestCase {
         
         // When
         request
-            .request(with: URLSession.mockSession)
+            .request(expect: User.self, with: URLSession.mockSession)
             .mock(.success(mock))
             .receive(on: DispatchQueue.main)
         // Then

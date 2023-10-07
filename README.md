@@ -90,7 +90,7 @@ let user = users[safe: 0] // Optional(User(id: 0, login: "Alice"))
 let user = users[safe: 20] // nil
 ```
 
-## ✔ EndPont
+## ✔ EndPoint
 ```Swift
 let urlRequest = EndPoint
     .init("https://api.github.com")
