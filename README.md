@@ -20,7 +20,7 @@ textField.textPublisher
 ## ✔ Support URLRequest
 ```swift 
 URLRequest(url: url)
-    .request()
+    .request(expect: User.self)
     .receive(on: DispatchQueue.main)
     .sink { _ in
         
@@ -29,7 +29,7 @@ URLRequest(url: url)
     }.store(in: &store)
 ```
 
-## ✔ Support async/ await and throws
+## ✔ Support async/ await and throws for AnyPublisher
 ```swift 
 let userNetwork: UserNetwork = .init()
 
@@ -78,4 +78,33 @@ Task {
         XCTAssertEqual(mockData.id, user.id)
     }
 }
+```
+
+# 💪 MightySwift
+
+## ✔ Array Extension
+```swift
+let users: [User] = [.....] // 11 Elements
+let user = users.find(\.id, value: 10) // Optional(User(id: 10, login: "John"))
+let user = users[safe: 0] // Optional(User(id: 0, login: "Alice"))
+let user = users[safe: 20] // nil
+```
+
+## ✔ EndPont
+```Swift
+let urlRequest = EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .httpHeaders(["Accept": "application/vnd.github+json"])
+    .httpMethod(.get)
+    .urlRequest
+```
+
+## ✔ URLRequest Extension
+```swift
+let urlRequest = URLRequest
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .httpHeaders(["Accept": "application/vnd.github+json"])
+    .httpMethod(.get)
 ```
