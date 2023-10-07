@@ -7,7 +7,8 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches:
+        - "*"
 
 jobs:
   build:
@@ -22,11 +23,25 @@ jobs:
 #      run: swift test -v
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: swift-actions/setup-swift@65540b95f51493d65f5e59e97dcef9629ddf11bf
-        with:
-          swift-version: "5.4"
-      - name: Build
-        run: swift build
-      - name: Run tests
-        run: swift test
+    
+      - name: Repository checkout
+        uses: actions/checkout@v2
+        
+      - name: Build for iOS
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme MightyCombine -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+      - name: Run iOS tests
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme MightyCombine -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+        
+      - name: Build for iOS
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme MightySwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+      - name: Run iOS tests
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme MightySwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+    
+#      - uses: actions/checkout@v4
+#      - uses: swift-actions/setup-swift@65540b95f51493d65f5e59e97dcef9629ddf11bf
+#        with:
+#          swift-version: "5.4"
+#      - name: Build
+#        run: swift build
+#      - name: Run tests
+#        run: swift test
