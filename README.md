@@ -19,12 +19,6 @@ textField.textPublisher
 
 ## ✔ Support URLRequest
 ```swift 
-let urlRequest = URLRequest
-    .init("https://api.github.com")
-    .urlPaths(["/users", "/octocat"])
-    .httpHeaders(["Accept": "application/vnd.github+json"])
-    .httpMethod(.get)
-
 URLRequest(url: url)
     .request(expect: User.self)
     .receive(on: DispatchQueue.main)
@@ -86,7 +80,9 @@ Task {
 }
 ```
 
-## ✔ Array Extensions
+# 💪 MightySwift
+
+## ✔ Array Extension
 ```swift
 let users: [User] = [.....] // 11 Elements
 let user = users.find(\.id, value: 10) // Optional(User(id: 10, login: "John"))
@@ -102,4 +98,13 @@ let urlRequest = EndPoint
     .httpHeaders(["Accept": "application/vnd.github+json"])
     .httpMethod(.get)
     .urlRequest
+```
+
+## ✔ URLRequest Extension
+```swift
+let urlRequest = URLRequest
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .httpHeaders(["Accept": "application/vnd.github+json"])
+    .httpMethod(.get)
 ```
