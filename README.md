@@ -17,6 +17,18 @@ textField.textPublisher
     }.store(in: &store)
 ```
 
+## ✔ Support URLRequest
+```swift 
+URLRequest(url: url)
+    .request()
+    .receive(on: DispatchQueue.main)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
 ## ✔ Support async/ await and throws
 ```swift 
 let userNetwork: UserNetwork = .init()
