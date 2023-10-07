@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Switch to Xcode 15
-      run: sudo xcode-select --switch /Applications/Xcode_15.0.app
+      run: sudo xcode-select --switch /Applications/Xcode_14.3.1.app
     - name: Generate xcodeproj
       run: swift package generate-xcodeproj
     - name: Run tests
