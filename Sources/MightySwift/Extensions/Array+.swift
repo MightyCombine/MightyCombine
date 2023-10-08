@@ -9,8 +9,7 @@ import Foundation
 
 public extension Array {
     
-    func find<T: Equatable>(_ keyPath: KeyPath<Element, T>, value: T?) -> Element? {
-        guard let value else { return nil }
+    func find<T: Equatable>(_ keyPath: KeyPath<Element, T>, value: T) -> Element? {
         return first(where: { $0[keyPath: keyPath] == value })
     }
     

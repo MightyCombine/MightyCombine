@@ -23,7 +23,7 @@ final class NetworkMockTest: XCTestCase {
     
     func test_injectSuccess() throws {
         
-        let mockData = User(login: "octopus", id: 112233)
+        let mockData = User(id: 112233, login: "octopus")
         sut.getUser = { _ in .inject(.success(mockData)) }
         
         Task {
