@@ -95,12 +95,18 @@ let user = users[safe: 20] // nil
 
 ## ✔ EndPoint
 ```Swift
-let urlRequest = EndPoint
+EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
     .httpHeaders(["Accept": "application/vnd.github+json"])
     .httpMethod(.get)
-    .urlRequest
+    .urlRequest // return URLRequest
+    .request(expect: User.self) // return AnyPublisher<User, Error>
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
 ```
 
 ## ✔ URLRequest Extension
