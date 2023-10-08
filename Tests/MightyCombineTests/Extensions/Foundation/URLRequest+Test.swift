@@ -13,15 +13,15 @@ import Combine
 final class URLRequest_Test: XCTestCase {
     
     // Given
-    let request = URLRequest(url: .init(string: "https://api.github.com/users/octocat")!)
+    let urlRequest = URLRequest(url: .init(string: "https://api.github.com/users/octocat")!)
     var store = Set<AnyCancellable>()
 
-    func test_inject_mock() throws {
+    func test_func_request() throws {
         
         let mock = User(login: "octocat", id: 123)
         
         // When
-        request
+        urlRequest
             .request(expect: User.self, with: URLSession.mockSession)
             .inject(.success(mock))
             .receive(on: DispatchQueue.main)

@@ -39,7 +39,6 @@ URLRequest(url: url)
 let userNetwork: UserNetwork = .init()
 
 userNetwork.getUser("octopus")
-    .receive(on: DispatchQueue.main)
     .sink { _ in
         
     } receiveValue: { user in

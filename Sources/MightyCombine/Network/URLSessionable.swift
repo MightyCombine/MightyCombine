@@ -10,7 +10,18 @@ import Combine
 
 public protocol URLSessionable {
     
-    func request<T: Decodable>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error>
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue) -> AnyPublisher<T, Error>
     
-    func request<T: Decodable>(_ urlRequest: URLRequest, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error>
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error>
+}
+
+public extension URLSessionable {
+    
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main) -> AnyPublisher<T, Error> {
+        request(urlRequest, scheduler: scheduler)
+    }
+    
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> {
+        request(urlRequest, scheduler: scheduler, responseHandler: responseHandler)
+    }
 }

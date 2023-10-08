@@ -12,14 +12,15 @@ extension URLSession: URLSessionable {
     
     public static let mockSession = MockURLSession()
     
-    public func request<T>(_ urlRequest: URLRequest) -> AnyPublisher<T, Error> where T : Decodable {
+    public func request<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
             .map(\.data)
             .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: scheduler)
             .eraseToAnyPublisher()
     }
     
-    public func request<T>(_ urlRequest: URLRequest, responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
+    public func request<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main,  responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
@@ -28,6 +29,7 @@ extension URLSession: URLSessionable {
                 return data
             }
             .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: scheduler)
             .eraseToAnyPublisher()
     }
 }
