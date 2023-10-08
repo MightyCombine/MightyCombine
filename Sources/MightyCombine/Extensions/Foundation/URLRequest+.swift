@@ -10,7 +10,7 @@ import Combine
 
 public extension URLRequest {
     
-    func request<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
-        sesssion.request(self)
+    func request<T: Decodable>(expect type: T.Type, scheduler: DispatchQueue = .main , with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
+        sesssion.request(self, scheduler: scheduler)
     }
 }

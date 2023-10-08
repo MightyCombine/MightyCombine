@@ -8,6 +8,13 @@
 import Foundation
 
 struct User: Codable {
-    let login: String
     let id: Int
+    let login: String
+    let secondId: Int?
+    
+    init(id: Int, login: String, secondId: Int? = nil) {
+        self.id = id
+        self.login = login
+        self.secondId = secondId
+    }
 }

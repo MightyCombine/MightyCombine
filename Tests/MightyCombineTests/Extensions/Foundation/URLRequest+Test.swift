@@ -18,7 +18,7 @@ final class URLRequest_Test: XCTestCase {
 
     func test_func_request() throws {
         
-        let mock = User(login: "octocat", id: 123)
+        let mock = User(id: 123, login: "octocat")
         
         // When
         urlRequest

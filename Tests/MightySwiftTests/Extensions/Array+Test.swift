@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import MightySwift
+@testable import TestSource
 
 // public extension Array
 final class Array_Test: XCTestCase {
@@ -57,6 +58,26 @@ final class Array_Test: XCTestCase {
         XCTAssertNil(userWithLoginZ)
     }
     
+    // func find<T: Equatable>(_ keyPath: KeyPath<Element, T>, value: T?) -> Element?
+    func test_func_find_Element가_Optional_이라서_Nil을_찾는_경우() {
+        
+        // Given
+        let users: [User] = [
+            .init(id: 1, login: "one", secondId: 5),
+            .init(id: 2, login: "two", secondId: 6),
+            .init(id: 3, login: "three", secondId: nil)
+        ]
+        
+        // When
+        let user = users.find(\.secondId, value: nil)
+        
+        // Then
+        XCTAssertNotNil(user)
+        if let user {
+            XCTAssertEqual(user.id, 3)
+        }
+    }
+    
     // subscript (safe index: Int) -> Element?
     func test_func_safe_subscript() {
         
@@ -72,9 +93,4 @@ final class Array_Test: XCTestCase {
         XCTAssertNotNil(thirdElement)
         XCTAssertEqual(thirdElement, array[3])
     }
-}
-
-struct User {
-    let id: Int
-    let login: String
 }

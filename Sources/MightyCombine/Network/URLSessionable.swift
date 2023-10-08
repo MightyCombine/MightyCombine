@@ -17,11 +17,11 @@ public protocol URLSessionable {
 
 public extension URLSessionable {
     
-    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main) -> AnyPublisher<T, Error> {
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = .main) -> AnyPublisher<T, Error> {
         request(urlRequest, scheduler: scheduler)
     }
     
-    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> {
+    func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = .main, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> {
         request(urlRequest, scheduler: scheduler, responseHandler: responseHandler)
     }
 }
