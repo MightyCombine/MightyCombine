@@ -27,7 +27,6 @@ public extension AnyPublisher {
                 var cancellable: AnyCancellable?
                 var finishedWithoutValue = true
                 cancellable = first()
-                    .subscribe(on: DispatchQueue.main)
                     .sink { completion in
                         switch completion {
                         case .finished:
