@@ -46,7 +46,7 @@ public extension AnyPublisher {
         }
     }
     
-    func mock(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
+    func inject(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
         switch mock {
         case .success(let model):
             return Just(model)

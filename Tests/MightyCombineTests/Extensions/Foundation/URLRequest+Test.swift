@@ -16,14 +16,14 @@ final class URLRequest_Test: XCTestCase {
     let request = URLRequest(url: .init(string: "https://api.github.com/users/octocat")!)
     var store = Set<AnyCancellable>()
 
-    func testExample() throws {
+    func test_inject_mock() throws {
         
         let mock = User(login: "octocat", id: 123)
         
         // When
         request
             .request(expect: User.self, with: URLSession.mockSession)
-            .mock(.success(mock))
+            .inject(.success(mock))
             .receive(on: DispatchQueue.main)
         // Then
             .sink { completion in
