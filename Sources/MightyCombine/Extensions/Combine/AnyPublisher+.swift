@@ -27,7 +27,6 @@ public extension AnyPublisher {
                 var cancellable: AnyCancellable?
                 var finishedWithoutValue = true
                 cancellable = first()
-                    .subscribe(on: DispatchQueue.main)
                     .sink { completion in
                         switch completion {
                         case .finished:
@@ -46,7 +45,7 @@ public extension AnyPublisher {
         }
     }
     
-    func mock(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
+    func inject(_ mock: NetworkMock<Output>) -> AnyPublisher<Output, Failure> {
         switch mock {
         case .success(let model):
             return Just(model)

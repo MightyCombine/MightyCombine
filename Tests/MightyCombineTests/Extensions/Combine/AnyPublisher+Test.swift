@@ -14,13 +14,13 @@ final class AnyPublisher_Test: XCTestCase {
     
     var store = Set<AnyCancellable>()
 
-    func test_func_mock() throws {
+    func test_func_inject() throws {
         
         let expectInt = 123
         
         Empty<Int, Error>()
             .eraseToAnyPublisher()
-            .mock(.success(expectInt))
+            .inject(.success(expectInt))
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 XCTAssertNil(completion.error)
@@ -32,7 +32,7 @@ final class AnyPublisher_Test: XCTestCase {
         
         Empty<Int, TestError>()
             .eraseToAnyPublisher()
-            .mock(.fail(expectError))
+            .inject(.fail(expectError))
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 XCTAssertNotNil(completion.error as? TestError)
