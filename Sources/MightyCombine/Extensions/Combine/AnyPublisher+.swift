@@ -58,6 +58,30 @@ public extension AnyPublisher {
                 .eraseToAnyPublisher()
         }
     }
+    
+    // https://www.swiftbysundell.com/articles/calling-async-functions-within-a-combine-pipeline/
+    func asyncMap<T>(_ transform: @escaping (Output) async -> T) -> Publishers.FlatMap<Future<T, Failure>, Self> {
+         flatMap { value in
+             Future { promise in
+                 Task {
+                     let output = await transform(value)
+                     promise(.success(output))
+                 }
+             }
+         }
+     }
+    
+    // https://www.swiftbysundell.com/articles/calling-async-functions-within-a-combine-pipeline/
+    func asyncThrowsMap<T>(_ transform: @escaping (Output) async throws -> T?) -> Publishers.FlatMap<Future<T?, Never>, Self> {
+         flatMap { value in
+             Future { promise in
+                 Task {
+                     let output = try? await transform(value)
+                     promise(.success(output))
+                 }
+             }
+         }
+     }
 }
 
 enum AnyPublisherError: Error {
