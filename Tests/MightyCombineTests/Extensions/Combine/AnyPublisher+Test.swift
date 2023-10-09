@@ -42,6 +42,55 @@ final class AnyPublisher_Test: XCTestCase {
             } receiveValue: { _ in
                 
             }.store(in: &store)
+    }
+    
+    func test_asyncThrowsMap() {
+        
+        let expectation = XCTestExpectation(description: "asyncThrowsMap Test")
+        var expect: Int? = nil
+        var arrival: Int? = nil
+        
+        // Given
+        Just({ })
+            .eraseToAnyPublisher()
+        // When
+            .asyncThrowsMap({ _ in
+                expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
+                return try await Task.sleep(nanoseconds: 3_000_000_000)
+            })
+            .receive(on: DispatchQueue.main)
+        // Then
+            .sink( receiveValue: { _ in
+                arrival = Int(Date().timeIntervalSince1970)
+                XCTAssertEqual(expect, arrival)
+                expectation.fulfill()
+            }).store(in: &store)
+        
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
+    func test_asyncMap() {
+        
+        let expectation = XCTestExpectation(description: "asyncMap Test")
+        var expect: Int? = nil
+        var arrival: Int? = nil
+        
+        // Given
+        Just({ })
+            .eraseToAnyPublisher()
+        // When
+            .asyncMap({ _ in
+                expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
+                return try? await Task.sleep(nanoseconds: 3_000_000_000)
+            })
+            .receive(on: DispatchQueue.main)
+        // Then
+            .sink(receiveValue: { value in
+                arrival = Int(Date().timeIntervalSince1970)
+                XCTAssertEqual(expect, arrival)
+                expectation.fulfill()
+            }).store(in: &store)
 
+        wait(for: [expectation], timeout: 10.0)
     }
 }
