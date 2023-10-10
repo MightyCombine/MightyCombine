@@ -7,14 +7,14 @@
 
 import Foundation
 
-public struct EndPoint {
+public struct EndPoint: EndPointable {
     
-    let baseURL: String
-    var paths: [String]?
-    var queries: [String: String]?
-    var headers: [String: String]?
-    var body: [String: Any]?
-    var method: HttpMethod
+    public let baseURL: String
+    public var paths: [String]?
+    public var queries: [String: String]?
+    public var headers: [String: String]?
+    public var body: [String: Any]?
+    public var method: HttpMethod
     
     public init(
         _ baseURL: String,
