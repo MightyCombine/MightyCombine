@@ -1,13 +1,22 @@
 //
-//  EndPoint+.swift
+//  EndPointable+.swift
 //
 //
-//  Created by 김인섭 on 10/7/23.
+//  Created by 김인섭 on 10/10/23.
 //
 
 import Foundation
 
-public extension EndPoint {
+public extension EndPointable {
+    
+    var urlRequest: URLRequest {
+        .init(baseURL)
+        .urlPaths(paths)
+        .urlQueries(queries)
+        .httpHeaders(headers)
+        .httpBody(body)
+        .httpMethod(method)
+    }
     
     func urlPaths(_ paths: [String]?) -> Self {
         var new = self
