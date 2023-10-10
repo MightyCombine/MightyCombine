@@ -1,5 +1,5 @@
 //
-//  EndPointableHeadersTest.swift
+//  HeadersTest.swift
 //
 //
 //  Created by 김인섭 on 10/10/23.
@@ -9,7 +9,7 @@ import XCTest
 @testable import MightySwift
 @testable import TestSource
 
-final class EndPointableHeadersTest: XCTestCase {
+final class HeadersTest: XCTestCase {
     
     func test_post일때_header에_contentType들어가는지() {
     
