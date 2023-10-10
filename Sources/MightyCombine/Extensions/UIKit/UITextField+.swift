@@ -13,6 +13,7 @@ public extension UITextField {
     var textPublisher: AnyPublisher<String, Never> {
         controlPublisher(for: .editingChanged)
             .map { _ in self.text ?? "" }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }
