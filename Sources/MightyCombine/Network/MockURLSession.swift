@@ -10,7 +10,6 @@ import Combine
 
 public struct MockURLSession: URLSessionable {
     
-    
     var response: HTTPURLResponse?
     
     public init(response: HTTPURLResponse? = nil) {

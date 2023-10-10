@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 
-public extension URLRequest {
+extension URLRequest: Requestable {
     
-    func request<T: Decodable>(expect type: T.Type, scheduler: DispatchQueue = .main , with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
+    public func request<T: Decodable>(expect type: T.Type, scheduler: DispatchQueue = .main , with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
         sesssion.request(self, scheduler: scheduler)
     }
 }
