@@ -104,8 +104,7 @@ EndPoint
     .urlPaths(["/users", "/octocat"])
     .httpHeaders(["Accept": "application/vnd.github+json"])
     .httpMethod(.get)
-    .urlRequest // return URLRequest
-    .request(expect: User.self) // return AnyPublisher<User, Error>
+    .request(expect: User.self)
     .sink { _ in
         
     } receiveValue: { user in
