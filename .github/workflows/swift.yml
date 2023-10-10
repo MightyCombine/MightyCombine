@@ -2,7 +2,9 @@ name: XCTest
 
 on:
   push:
-    branches: [main]
+    branches:
+        - main
+        - develop
 
 jobs:
   build:
