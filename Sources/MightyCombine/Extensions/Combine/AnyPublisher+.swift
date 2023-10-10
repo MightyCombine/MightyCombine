@@ -59,7 +59,6 @@ public extension AnyPublisher {
         }
     }
     
-    // https://www.swiftbysundell.com/articles/calling-async-functions-within-a-combine-pipeline/
     func asyncMap<T>(_ transform: @escaping (Output) async -> T) -> Publishers.FlatMap<Future<T, Failure>, Self> {
          flatMap { value in
              Future { promise in
@@ -71,13 +70,16 @@ public extension AnyPublisher {
          }
      }
     
-    // https://www.swiftbysundell.com/articles/calling-async-functions-within-a-combine-pipeline/
-    func asyncThrowsMap<T>(_ transform: @escaping (Output) async throws -> T?) -> Publishers.FlatMap<Future<T?, Never>, Self> {
+    func asyncThrowsMap<T>(_ transform: @escaping (Output) async throws -> T) -> Publishers.FlatMap<Future<T, Error>, Self> {
          flatMap { value in
              Future { promise in
                  Task {
-                     let output = try? await transform(value)
-                     promise(.success(output))
+                     do {
+                         let output = try await transform(value)
+                         promise(.success(output))
+                     } catch let error {
+                         promise(.failure(error))
+                     }
                  }
              }
          }
