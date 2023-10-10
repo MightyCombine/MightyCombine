@@ -46,13 +46,14 @@ final class AnyPublisher_Test: XCTestCase {
     
     func test_asyncThrowsMap() {
         
+        // Given
+        let userNetwork = UserNetwork(session: URLSession.mockSession)
         let expectation = XCTestExpectation(description: "asyncThrowsMap Test")
         var expect: Int? = nil
         var arrival: Int? = nil
         
-        // Given
-        Just({ })
-            .eraseToAnyPublisher()
+        userNetwork.getUser("octocat")
+            .inject(.success(.init(id: 0, login: "octocat")))
         // When
             .asyncThrowsMap({ _ in
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
@@ -60,24 +61,49 @@ final class AnyPublisher_Test: XCTestCase {
             })
             .receive(on: DispatchQueue.main)
         // Then
-            .sink( receiveValue: { _ in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
                 XCTAssertEqual(expect, arrival)
                 expectation.fulfill()
             }).store(in: &store)
         
-        wait(for: [expectation], timeout: 10.0)
+
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func test_asyncThrowsMap_throw하는_경우() {
+        
+        // Given
+        let userNetwork = UserNetwork(session: URLSession.mockSession)
+        
+        userNetwork.getUser("octocat")
+            .inject(.success(.init(id: 0, login: "octocat")))
+        // When
+            .asyncThrowsMap({ _ in
+                throw TestError.testError
+            })
+            .receive(on: DispatchQueue.main)
+        // Then
+            .sink(receiveCompletion: { completion in
+                guard let error = completion.error as? TestError else { return }
+                XCTAssertEqual(error, TestError.testError)
+            }, receiveValue: { _ in
+                
+            }).store(in: &store)
     }
     
     func test_asyncMap() {
         
+        // Given
+        let userNetwork = UserNetwork(session: URLSession.mockSession)
         let expectation = XCTestExpectation(description: "asyncMap Test")
         var expect: Int? = nil
         var arrival: Int? = nil
         
-        // Given
-        Just({ })
-            .eraseToAnyPublisher()
+        userNetwork.getUser("octocat")
+            .inject(.success(.init(id: 0, login: "octocat")))
         // When
             .asyncMap({ _ in
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
@@ -85,12 +111,14 @@ final class AnyPublisher_Test: XCTestCase {
             })
             .receive(on: DispatchQueue.main)
         // Then
-            .sink(receiveValue: { value in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
                 XCTAssertEqual(expect, arrival)
                 expectation.fulfill()
             }).store(in: &store)
-
-        wait(for: [expectation], timeout: 10.0)
+        
+        wait(for: [expectation], timeout: 5.0)
     }
 }
