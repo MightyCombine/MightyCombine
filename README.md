@@ -43,7 +43,7 @@ Task {
 ```swift 
 userNetwork.getUser("octocat")
     .asyncMap({ user in
-        await doSomething(use)
+        await doSomething()
     })
     .sink(receiveCompletion: { _ in
         
