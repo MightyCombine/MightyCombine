@@ -13,7 +13,8 @@ let package = Package(
         .library(
             name: "MightyCombine",
             targets: [
-                "MightyCombine"
+                "MightyCombine",
+                "MightySwift"
             ]
         ),
         .library(
