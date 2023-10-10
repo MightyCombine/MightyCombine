@@ -35,19 +35,33 @@ URLRequest(url: url)
 
 ## ✔ Support async/ await and throws for AnyPublisher
 ```swift 
-let userNetwork: UserNetwork = .init()
-
-userNetwork.getUser("octopus")
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
-
 Task {
     let user = try? await userNetwork.getUser("octopus").asyncThrows
     print(user)
 }
+```
+
+## ✔ asyncMap and asyncThrowsMap
+```swift 
+userNetwork.getUser("octocat")
+    .asyncMap({ user in
+        await doSomething(use)
+    })
+    .sink(receiveCompletion: { _ in
+        
+    }, receiveValue: { _ in
+        
+    }).store(in: &store)
+
+userNetwork.getUser("octocat")
+    .asyncThrowsMap({ user in
+        try await doSomething()
+    })
+    .sink(receiveCompletion: { _ in
+        
+    }, receiveValue: { _ in
+        
+    }).store(in: &store)
 ```
 
 ## ✔ Support XCTest
@@ -84,14 +98,6 @@ Task {
 ```
 
 # 💪 MightySwift
-
-## ✔ Array Extension
-```swift
-let users: [User] = [.....] // 11 Elements
-let user = users.find(\.id, value: 10) // Optional(User(id: 10, login: "John"))
-let user = users[safe: 0] // Optional(User(id: 0, login: "Alice"))
-let user = users[safe: 20] // nil
-```
 
 ## ✔ EndPoint
 ```Swift
