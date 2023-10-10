@@ -19,11 +19,14 @@ class UserNetwork {
         self.session = session
     }
     
+    static func testBuild() -> UserNetwork {
+        UserNetwork(session: URLSession.mockSession)
+    }
+    
     lazy var getUser: (String) -> AnyPublisher<User, Error> = { username in
         EndPoint
             .init(self.baseURL)
             .urlPaths(["/users", "/\(username)"])
-            .urlRequest
             .request(expect: User.self, with: self.session)
     }
 }
