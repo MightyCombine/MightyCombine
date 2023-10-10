@@ -17,6 +17,7 @@ public extension UITextView {
         )
         .compactMap { $0.object as? UITextView }
         .map { $0.text ?? "" }
+        .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
      }
 }

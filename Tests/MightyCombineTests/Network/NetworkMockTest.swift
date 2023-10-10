@@ -10,7 +10,7 @@ final class NetworkMockTest: XCTestCase {
     
     func test_injectFail() throws {
         
-        sut.getUser = { _ in .inject(.fail(NSError())) }
+        sut.getUser = { _ in .inject(.failure(NSError())) }
         
         Task {
             // When

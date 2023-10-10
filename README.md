@@ -10,13 +10,11 @@
 ## ✔ Support UIKit
 ```swift 
 button.eventPublisher(for: .touchUpInside)
-    .receive(on: DispatchQueue.main)
     .sink { _ in
         print("TAP")
     }.store(in: &store)
     
 textField.textPublisher
-    .receive(on: DispatchQueue.main)
     .sink { text in
         print(text)
     }.store(in: &store)
@@ -35,26 +33,40 @@ URLRequest(url: url)
 
 ## ✔ Support async/ await and throws for AnyPublisher
 ```swift 
-let userNetwork: UserNetwork = .init()
-
-userNetwork.getUser("octopus")
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
-
 Task {
     let user = try? await userNetwork.getUser("octopus").asyncThrows
     print(user)
 }
 ```
 
+## ✔ Support asyncMap and asyncThrowsMap for AnyPublisher
+```swift 
+userNetwork.getUser("octocat")
+    .asyncMap({ user in
+        await doSomething()
+    })
+    .sink(receiveCompletion: { _ in
+        
+    }, receiveValue: { _ in
+        
+    }).store(in: &store)
+
+userNetwork.getUser("octocat")
+    .asyncThrowsMap({ user in
+        try await doSomething()
+    })
+    .sink(receiveCompletion: { _ in
+        
+    }, receiveValue: { _ in
+        
+    }).store(in: &store)
+```
+
 ## ✔ Support XCTest
 ```swift
 // Given
 let sut: UserNetwork = .init()
-sut.getUser = { _ in .inject(.fail(NSError())) }
+sut.getUser = { _ in .inject(.failure(NSError())) }
 
 Task {
     // When
@@ -84,14 +96,6 @@ Task {
 ```
 
 # 💪 MightySwift
-
-## ✔ Array Extension
-```swift
-let users: [User] = [.....] // 11 Elements
-let user = users.find(\.id, value: 10) // Optional(User(id: 10, login: "John"))
-let user = users[safe: 0] // Optional(User(id: 0, login: "Alice"))
-let user = users[safe: 20] // nil
-```
 
 ## ✔ EndPoint
 ```Swift
