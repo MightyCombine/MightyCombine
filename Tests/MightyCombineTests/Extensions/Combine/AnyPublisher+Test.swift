@@ -35,8 +35,8 @@ final class AnyPublisher_Test: XCTestCase {
             .inject(.failure(expectError))
             .receive(on: DispatchQueue.main)
             .sink { completion in
-                XCTAssertNotNil(completion.error as? TestError)
-                if let error = completion.error as? TestError {
+                XCTAssertNotNil(completion.error)
+                if let error = completion.error {
                     XCTAssertEqual(error, expectError)
                 }
             } receiveValue: { _ in
