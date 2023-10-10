@@ -39,7 +39,7 @@ Task {
 }
 ```
 
-## ✔ asyncMap and asyncThrowsMap
+## ✔ Support asyncMap and asyncThrowsMap for AnyPublisher
 ```swift 
 userNetwork.getUser("octocat")
     .asyncMap({ user in
