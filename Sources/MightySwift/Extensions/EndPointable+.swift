@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Combine
+import MightyCombine
 
 public extension EndPointable {
     
@@ -46,5 +48,9 @@ public extension EndPointable {
         var new = self
         new.method = method
         return new
+    }
+    
+    func request<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
+        sesssion.request(urlRequest)
     }
 }
