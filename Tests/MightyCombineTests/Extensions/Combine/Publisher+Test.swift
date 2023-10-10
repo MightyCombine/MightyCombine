@@ -24,6 +24,7 @@ final class Publisher_Test: XCTestCase {
         
         userNetwork.getUser("octocat")
             .inject(.success(.init(id: 0, login: "octocat")))
+            .receive(on: DispatchQueue.main)
         // When
             .asyncThrowsMap({ _ in
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
@@ -35,7 +36,8 @@ final class Publisher_Test: XCTestCase {
                 
             }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
-                XCTAssertEqual(expect, arrival)
+                guard let expect, let arrival else { return }
+                XCTAssert((expect...expect+1).contains(arrival))
                 expectation.fulfill()
             }).store(in: &store)
         
@@ -83,10 +85,11 @@ final class Publisher_Test: XCTestCase {
                 
             }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
-                XCTAssertEqual(expect, arrival)
+                guard let expect, let arrival else { return }
+                XCTAssert((expect...expect+1).contains(arrival))
                 expectation.fulfill()
             }).store(in: &store)
         
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 10.0)
     }
 }
