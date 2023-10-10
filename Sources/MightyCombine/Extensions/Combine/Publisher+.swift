@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-extension Publisher {
+public extension Publisher {
     
     func asyncMap<T>(_ transform: @escaping (Output) async -> T) -> Publishers.FlatMap<Future<T, Failure>, Self> {
          flatMap { value in
