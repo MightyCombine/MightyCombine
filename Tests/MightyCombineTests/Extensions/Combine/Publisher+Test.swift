@@ -11,7 +11,7 @@ import Combine
 @testable import TestSource
 
 final class Publisher_Test: XCTestCase {
-    
+
     var store = Set<AnyCancellable>()
 
     func test_asyncThrowsMap() {
@@ -64,7 +64,7 @@ final class Publisher_Test: XCTestCase {
                 
             }).store(in: &store)
     }
-    
+
     func test_asyncMap() {
         
         // Given
@@ -86,10 +86,11 @@ final class Publisher_Test: XCTestCase {
             }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
                 guard let expect, let arrival else { return }
-                XCTAssert((expect...expect+1).contains(arrival))
+                print("DEBUG", (expect...expect+1).contains(arrival))
+                XCTAssert((expect...expect+1).contains(arrival), "asyncMap Test")
                 expectation.fulfill()
             }).store(in: &store)
         
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5.0)
     }
 }
