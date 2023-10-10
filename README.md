@@ -3,7 +3,7 @@
 [![XCTest](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml/badge.svg)](https://github.com/MightyCombine/MightyCombine/actions/workflows/swift.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Static Badge](https://img.shields.io/badge/iOS-v13-blue)
-![Static Badge](https://img.shields.io/badge/Swift-v5.4-orange)
+![Static Badge](https://img.shields.io/badge/Swift-5.4-orange)
 
 > We build powerful and convenient features using Combine and Swift only.
 
