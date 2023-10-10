@@ -54,7 +54,6 @@ final class Publisher_Test: XCTestCase {
             .asyncThrowsMap({ _ in
                 throw TestError.testError
             })
-            .receive(on: DispatchQueue.main)
         // Then
             .sink(receiveCompletion: { completion in
                 guard let error = completion.error as? TestError else { return }
@@ -79,7 +78,6 @@ final class Publisher_Test: XCTestCase {
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
                 return try? await Task.sleep(nanoseconds: 3_000_000_000)
             })
-            .receive(on: DispatchQueue.main)
         // Then
             .sink(receiveCompletion: { _ in
                 
