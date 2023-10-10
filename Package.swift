@@ -13,15 +13,13 @@ let package = Package(
         .library(
             name: "MightyCombine",
             targets: [
-                "MightyCombine",
+                "MightyCombine", 
                 "MightySwift"
             ]
         ),
         .library(
             name: "MightySwift",
-            targets: [
-                "MightySwift"
-            ]
+            targets: ["MightySwift"]
         )
     ],
     targets: [
@@ -31,12 +29,13 @@ let package = Package(
             name: "MightyCombine"
         ),
         .target(
-            name: "MightySwift"
+            name: "MightySwift",
+            dependencies: ["MightyCombine"]
         ),
         .target(
             name: "TestSource",
             dependencies: [
-                "MightyCombine",
+                "MightyCombine", 
                 "MightySwift"
             ]
         ),
