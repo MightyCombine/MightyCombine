@@ -32,7 +32,7 @@ final class AnyPublisher_Test: XCTestCase {
         
         Empty<Int, TestError>()
             .eraseToAnyPublisher()
-            .inject(.fail(expectError))
+            .inject(.failure(expectError))
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 XCTAssertNotNil(completion.error as? TestError)

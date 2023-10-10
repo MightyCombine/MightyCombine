@@ -66,7 +66,7 @@ userNetwork.getUser("octocat")
 ```swift
 // Given
 let sut: UserNetwork = .init()
-sut.getUser = { _ in .inject(.fail(NSError())) }
+sut.getUser = { _ in .inject(.failure(NSError())) }
 
 Task {
     // When
