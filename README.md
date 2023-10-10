@@ -31,7 +31,7 @@ URLRequest(url: url)
     }.store(in: &store)
 ```
 
-## ✔ Support async/ await and throws for AnyPublisher
+## ✔ Support async/ await and throws
 ```swift 
 Task {
     let user = try? await userNetwork.getUser("octopus").asyncThrows
@@ -39,7 +39,7 @@ Task {
 }
 ```
 
-## ✔ Support asyncMap and asyncThrowsMap for AnyPublisher
+## ✔ Support asyncMap and asyncThrowsMap
 ```swift 
 userNetwork.getUser("octocat")
     .asyncMap({ user in
