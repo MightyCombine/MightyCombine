@@ -102,8 +102,6 @@ Task {
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
-    .httpHeaders(["Accept": "application/vnd.github+json"])
-    .httpMethod(.get)
     .request(expect: User.self)
     .sink { _ in
         
@@ -117,6 +115,4 @@ EndPoint
 let urlRequest = URLRequest
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
-    .httpHeaders(["Accept": "application/vnd.github+json"])
-    .httpMethod(.get)
 ```
