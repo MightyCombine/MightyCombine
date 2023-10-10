@@ -35,7 +35,8 @@ let package = Package(
         .target(
             name: "TestSource",
             dependencies: [
-                "MightyCombine"
+                "MightyCombine",
+                "MightySwift"
             ]
         ),
         .testTarget(
