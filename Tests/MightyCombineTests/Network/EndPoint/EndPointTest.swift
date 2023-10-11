@@ -61,7 +61,9 @@ final class EndPointTest: XCTestCase {
         XCTAssertNotNil(id)
         XCTAssertNotNil(hireable)
         
-        guard let id, let hireable else { return }
+        guard let id = id,
+              let hireable = hireable
+        else { return }
         
         XCTAssertEqual(id, 1)
         XCTAssertEqual(hireable, false)
