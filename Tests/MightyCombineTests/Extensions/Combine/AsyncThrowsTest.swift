@@ -16,7 +16,6 @@ final class AsyncThrowsTest: XCTestCase {
         Task {
             do {
                 let _ = try await Empty<Any, Error>()
-                    .eraseToAnyPublisher()
                     .asyncThrows
             } catch let error {
                 XCTAssertNotNil(error as? AnyPublisherError)
@@ -31,7 +30,6 @@ final class AsyncThrowsTest: XCTestCase {
         Task {
             do {
                 let _ = try await Fail<Any, TestError>(error: TestError.testError)
-                    .eraseToAnyPublisher()
                     .asyncThrows
             } catch let error {
                 XCTAssertNotNil(error as? TestError)
@@ -48,7 +46,6 @@ final class AsyncThrowsTest: XCTestCase {
         Task {
             let result = try? await Just(expect)
                 .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
                 .asyncThrows
             XCTAssertNotNil(result)
             if let result {
