@@ -22,30 +22,6 @@ public extension AnyPublisher {
         }
     }
 
-     var asyncThrows: Output {
-        get async throws {
-            try await withCheckedThrowingContinuation { continuation in
-                var cancellable: AnyCancellable?
-                var finishedWithoutValue = true
-                cancellable = first()
-                    .sink { completion in
-                        switch completion {
-                        case .finished:
-                            if finishedWithoutValue {
-                                continuation.resume(throwing: AnyPublisherError.finishedWithoutValue)
-                            }
-                        case .failure(let error):
-                            continuation.resume(throwing: error)
-                        }
-                        cancellable?.cancel()
-                    } receiveValue: { value in
-                        finishedWithoutValue = false
-                        continuation.resume(with: .success(value))
-                    }
-            }
-        }
-    }
-    
     func inject(_ mock: Result<Output, Failure>) -> AnyPublisher<Output, Failure> {
         switch mock {
         case .success(let model):
@@ -57,8 +33,4 @@ public extension AnyPublisher {
                 .eraseToAnyPublisher()
         }
     }
-}
-
-enum AnyPublisherError: Error {
-    case finishedWithoutValue
 }
