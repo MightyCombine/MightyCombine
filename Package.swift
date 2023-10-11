@@ -12,10 +12,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "MightyCombine",
-            targets: [
-                "MightyCombine", 
-                "MightySwift"
-            ]
+            targets: ["MightyCombine", "MightySwift"]
         ),
         .library(
             name: "MightySwift",
@@ -26,10 +23,14 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "MightyCombine"
+            name: "MightyCombine",
+            dependencies: ["MightySwift"]
         ),
         .target(
-            name: "MightySwift",
+            name: "MightySwift"
+        ),
+        .target(
+            name: "Example",
             dependencies: ["MightyCombine"]
         ),
         .target(
@@ -50,14 +51,6 @@ let package = Package(
             name: "MightySwiftTests",
             dependencies: [
                 "MightySwift",
-                "TestSource"
-            ]
-        ),
-        .testTarget(
-            name: "IntegrationTests",
-            dependencies: [
-                "MightySwift",
-                "MightyCombine",
                 "TestSource"
             ]
         )
