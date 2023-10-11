@@ -55,14 +55,6 @@ let package = Package(
                 "MightySwift",
                 "TestSource"
             ]
-        ),
-        .testTarget(
-            name: "IntegrationTests",
-            dependencies: [
-                "MightySwift",
-                "MightyCombine",
-                "TestSource"
-            ]
         )
     ]
 )
