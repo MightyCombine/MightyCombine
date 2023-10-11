@@ -30,6 +30,12 @@ let package = Package(
             name: "MightySwift"
         ),
         .target(
+            name: "Example",
+            dependencies: [
+                "MightySwift"
+            ]
+        ),
+        .target(
             name: "TestSource",
             dependencies: [
                 "MightyCombine", 

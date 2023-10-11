@@ -17,9 +17,9 @@ class UserNetwork {
         self.session = session
     }
     
-    lazy var getUser: (String) -> AnyPublisher<User, Error> = { [weak self] username in
+    lazy var getUser: (String) -> AnyPublisher<User, Error> = { username in
         let urlString = "https://api.github.com/users/" + username
         let request = URLRequest(url: .init(string: urlString)!)
-        return self!.session.request(request)
+        return self.session.request(request)
     }
 }
