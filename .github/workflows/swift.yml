@@ -16,13 +16,3 @@ jobs:
 
     - name: Run tests on iPhone14
       run: xcodebuild test -destination 'name=iPhone 14' -scheme 'MightyCombine-Package'
-      
-  test-macos:
-
-    runs-on: macOS-10.15
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Run tests on macOS 10.15
-      run: xcodebuild test -scheme 'MightyCombine-Package'
