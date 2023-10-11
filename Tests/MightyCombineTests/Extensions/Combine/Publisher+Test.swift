@@ -36,7 +36,9 @@ final class Publisher_Test: XCTestCase {
                 
             }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
-                guard let expect, let arrival else { return }
+                guard let expect = expect,
+                      let arrival = arrival
+                else { return }
                 XCTAssert((expect...expect+1).contains(arrival))
                 expectation.fulfill()
             }).store(in: &store)
@@ -85,7 +87,9 @@ final class Publisher_Test: XCTestCase {
                 
             }, receiveValue: { _ in
                 arrival = Int(Date().timeIntervalSince1970)
-                guard let expect, let arrival else { return }
+                guard let expect = expect,
+                      let arrival = arrival
+                else { return }
                 print("DEBUG", (expect...expect+1).contains(arrival))
                 XCTAssert((expect...expect+1).contains(arrival), "asyncMap Test")
                 expectation.fulfill()
