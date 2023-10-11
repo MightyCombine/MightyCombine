@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MightySwift
 
 public struct EndPoint: EndPointable {
     

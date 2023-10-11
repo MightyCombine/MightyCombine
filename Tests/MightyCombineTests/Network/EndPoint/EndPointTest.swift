@@ -1,5 +1,5 @@
 import XCTest
-@testable import MightySwift
+@testable import MightyCombine
 
 final class EndPointTest: XCTestCase {
     
@@ -21,7 +21,6 @@ final class EndPointTest: XCTestCase {
         "id": 1,
         "hireable": false
     ]
-    let method: HttpMethod = .get
     
     // When
     var request: URLRequest {
@@ -72,6 +71,6 @@ final class EndPointTest: XCTestCase {
         
         guard let method = request.httpMethod else { return }
         
-        XCTAssertEqual(method, HttpMethod.get.rawValue)
+        XCTAssertEqual(method, "GET")
     }
 }

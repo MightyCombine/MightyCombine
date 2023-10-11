@@ -7,7 +7,7 @@
 
 import XCTest
 import Combine
-@testable import MightySwift
+@testable import MightyCombine
 @testable import TestSource
 
 final class RequestTest: XCTestCase {

@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import MightyCombine
+import MightySwift
 
 public extension EndPointable {
     
