@@ -5,7 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/iOS-v13-blue)
 ![Static Badge](https://img.shields.io/badge/Swift-5.4-orange)
 
-> We build powerful and convenient features using Combine and Swift only.
+> We build powerful and convenient features using Combine and Swift.
 
 ## ✔ Support UIKit
 ```swift 
