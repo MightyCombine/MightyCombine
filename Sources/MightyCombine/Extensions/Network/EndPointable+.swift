@@ -11,15 +11,6 @@ import MightySwift
 
 public extension EndPointable {
     
-    var urlRequest: URLRequest {
-        .init(baseURL)
-        .urlPaths(paths)
-        .urlQueries(queries)
-        .httpHeaders(headers)
-        .httpBody(body)
-        .httpMethod(method)
-    }
-    
     func urlPaths(_ paths: [String]?) -> Self {
         var new = self
         new.paths = paths
@@ -51,6 +42,6 @@ public extension EndPointable {
     }
     
     func request<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
-        sesssion.request(urlRequest)
+        sesssion.request(self.urlRequest)
     }
 }
