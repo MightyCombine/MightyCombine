@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import MightySwift
 
 public protocol EndPointable {
@@ -16,4 +17,7 @@ public protocol EndPointable {
     var headers: [String: String]? { get set }
     var body: [String: Any]? { get set }
     var method: HttpMethod { get set }
+    var urlRequest: URLRequest { get }
+    
+    func request<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable) -> AnyPublisher<T, Error>
 }
