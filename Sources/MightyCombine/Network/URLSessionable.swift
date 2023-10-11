@@ -12,6 +12,7 @@ public protocol URLSessionable {
     
     func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue) -> AnyPublisher<T, Error>
     
+    @available(macOS 10.15, *)
     func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error>
 }
 
@@ -21,6 +22,7 @@ public extension URLSessionable {
         request(urlRequest, scheduler: scheduler)
     }
     
+    @available(macOS 10.15, *)
     func request<T: Decodable>(_ urlRequest: URLRequest, scheduler: DispatchQueue = .main, responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> {
         request(urlRequest, scheduler: scheduler, responseHandler: responseHandler)
     }

@@ -22,6 +22,7 @@ public struct MockURLSession: URLSessionable {
             .eraseToAnyPublisher()
     }
     
+    @available(macOS 10.15, *)
     public func request<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main, responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
         guard let response = response else {
             return Empty()
