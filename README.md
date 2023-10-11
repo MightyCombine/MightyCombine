@@ -31,6 +31,19 @@ URLRequest(url: url)
     }.store(in: &store)
 ```
 
+## ✔ Support EndPoint
+```Swift
+EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .request(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
 ## ✔ Support async/ await and throws
 ```swift 
 Task {
@@ -97,18 +110,13 @@ Task {
 
 # 💪 MightySwift
 
-## ✔ EndPoint
-```Swift
-EndPoint
-    .init("https://api.github.com")
-    .urlPaths(["/users", "/octocat"])
-    .request(expect: User.self)
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
+## ✔ Array Extension 
+```swift 
+let users: [User] = [.....]
+let user = users.find(\.login, "octocat") // Optional(User(login: "octocat"))
+
 ```
+
 
 ## ✔ URLRequest Extension
 ```swift
