@@ -14,7 +14,9 @@ public extension URLRequest {
     }
     
     func urlPaths(_ paths: [String]?) -> Self {
-        guard let paths, let url = self.url else { return self }
+        guard let paths = paths,
+              let url = self.url
+        else { return self }
         var baseUrl = url.absoluteString
         paths.forEach { baseUrl += $0 }
         var request = self
@@ -23,7 +25,8 @@ public extension URLRequest {
     }
     
     func urlQueries(_ queries: [String: String]?) -> Self {
-        guard let queries else { return self }
+        guard let queries = queries 
+        else { return self }
         var request = self
         let url = request.url!
         var components = URLComponents(string: url.absoluteString)!
@@ -43,7 +46,8 @@ public extension URLRequest {
     }
     
     func httpBody(_ body: [String: Any]?) -> Self {
-        guard let body else { return self }
+        guard let body = body
+        else { return self }
         var request = self
         let data = try? JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = data
@@ -51,7 +55,8 @@ public extension URLRequest {
     }
     
     func httpHeaders(_ headers: [String: String]?) -> Self {
-        guard let headers else { return self }
+        guard let headers = headers
+        else { return self }
         var request = self
         headers.forEach {
             request.setValue($0.value, forHTTPHeaderField: $0.key)

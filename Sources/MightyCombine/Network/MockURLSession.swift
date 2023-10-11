@@ -23,7 +23,11 @@ public struct MockURLSession: URLSessionable {
     }
     
     public func request<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main, responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
-        guard let response else { return Empty().eraseToAnyPublisher() }
+        guard let response = response else {
+            return Empty()
+                .receive(on: scheduler)
+                .eraseToAnyPublisher()
+        }
         
         do {
             try responseHandler(response)
