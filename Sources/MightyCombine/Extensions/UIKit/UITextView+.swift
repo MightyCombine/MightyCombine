@@ -5,14 +5,15 @@
 //  Created by 김인섭 on 10/6/23.
 //
 
-import UIKit
+#if canImport(UIKit)
 import Combine
+import UIKit
 
 public extension UITextView {
     
     var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter.default.publisher(
-            for: UITextView.textDidChangeNotification, 
+            for: UITextView.textDidChangeNotification,
             object: self
         )
         .compactMap { $0.object as? UITextView }
@@ -21,3 +22,4 @@ public extension UITextView {
         .eraseToAnyPublisher()
      }
 }
+#endif

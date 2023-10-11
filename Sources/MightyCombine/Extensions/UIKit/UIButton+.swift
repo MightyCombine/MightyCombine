@@ -5,8 +5,9 @@
 //  Created by 김인섭 on 10/6/23.
 //
 
-import UIKit
+#if canImport(UIKit)
 import Combine
+import UIKit
 
 public extension UIButton {
     
@@ -17,3 +18,4 @@ public extension UIButton {
             .eraseToAnyPublisher()
     }
 }
+#endif

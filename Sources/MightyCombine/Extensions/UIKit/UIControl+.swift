@@ -5,8 +5,9 @@
 //  Created by 김인섭 on 10/6/23.
 //
 
-import UIKit
+#if canImport(UIKit)
 import Combine
+import UIKit
 
 public extension UIControl {
     
@@ -57,3 +58,4 @@ public extension UIControl {
         }
     }
 }
+#endif
