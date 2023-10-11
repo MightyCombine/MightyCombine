@@ -32,4 +32,13 @@ public struct EndPoint: EndPointable {
         self.body = body
         self.method = method
     }
+    
+    public var urlRequest: URLRequest {
+        .init(baseURL)
+        .urlPaths(paths)
+        .urlQueries(queries)
+        .httpHeaders(headers)
+        .httpBody(body)
+        .httpMethod(method)
+    }
 }
