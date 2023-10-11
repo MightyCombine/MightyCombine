@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  EndPoint.swift
+//
 //
 //  Created by 김인섭 on 10/7/23.
 //
