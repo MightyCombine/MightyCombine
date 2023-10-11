@@ -20,6 +20,7 @@ extension URLSession: URLSessionable {
             .eraseToAnyPublisher()
     }
     
+    @available(macOS 10.15, *)
     public func request<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = .main,  responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
