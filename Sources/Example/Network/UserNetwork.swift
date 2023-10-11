@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import MightySwift
 import MightyCombine
 
 class UserNetwork {
