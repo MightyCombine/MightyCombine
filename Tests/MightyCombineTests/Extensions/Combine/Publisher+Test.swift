@@ -97,4 +97,37 @@ final class Publisher_Test: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
+    
+    func test_optionalThrows_EmptyReturnNil() {
+        // Given
+        let value: Int? = Empty<Int, Error>()
+            .receive(on: DispatchQueue.main)
+        // When
+            .optionalThrows
+        // Then
+        XCTAssertNil(value)
+    }
+    
+    func test_optionalThrows_FailReturnNil() {
+        // Given
+        let value: Int? = Fail(error: NSError())
+            .receive(on: DispatchQueue.main)
+        // When
+            .optionalThrows
+        // Then
+        XCTAssertNil(value)
+    }
+    
+    func test_optionalThrows_JustReturnValue() {
+        // Given
+        let value: Int? = Just(1)
+            .setFailureType(to: Error.self)
+            .receive(on: DispatchQueue.main)
+        // When
+            .optionalThrows
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Then
+            XCTAssertEqual(value, 1)
+        }
+    }
 }
