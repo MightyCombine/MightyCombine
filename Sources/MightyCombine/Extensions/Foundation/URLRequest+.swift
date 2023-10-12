@@ -11,7 +11,11 @@ import Combine
 extension URLRequest: Requestable {
     
     @available(macOS 10.15, *)
-    public func requestPublisher<T: Decodable>(expect type: T.Type, scheduler: DispatchQueue = .main , with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
+    public func requestPublisher<T: Decodable>(
+        expect type: T.Type,
+        scheduler: DispatchQueue = .main ,
+        with sesssion: URLSessionable = URLSession.shared
+    ) -> AnyPublisher<T, Error> {
         sesssion.requestPublisher(self, scheduler: scheduler)
     }
 }
