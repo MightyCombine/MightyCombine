@@ -98,7 +98,7 @@ sut.getUser = { _ in .inject(.success(mockData)) }
 
 Task {
     // When
-    let user = try? await sut.getUser("octopus").asyncThrows
+    let user = try? await sut.getUser("octopus").asyncThrows 
     
     // Then
     XCTAssertNotNil(user)
@@ -114,9 +114,14 @@ Task {
 ```swift 
 let users: [User] = [.....]
 let user = users.find(\.login, "octocat") // Optional(User(login: "octocat"))
-
 ```
 
+## ✔ Optional Extension 
+```swift
+let optionalValue: Int? = nil
+let result = optionalValue.replaceNil(with: 10)
+print(result) // 10
+```
 
 ## ✔ URLRequest Extension
 ```swift

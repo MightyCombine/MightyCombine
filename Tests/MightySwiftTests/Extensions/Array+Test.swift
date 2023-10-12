@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import MightySwift
 @testable import TestSource
 
 // public extension Array
