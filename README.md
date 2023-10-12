@@ -75,6 +75,18 @@ userNetwork.getUser("octocat")
     }).store(in: &store)
 ```
 
+## ✔ Support optionalThrows
+```swift 
+let value = Just(1)
+    .setFailureType(to: Error.self)
+    .receive(on: DispatchQueue.main)
+    .optionalThrows // Optional(1)
+    
+let value: Int? = Fail(error: NSError())
+    .receive(on: DispatchQueue.main)
+    .optionalThrows // nil
+```
+
 ## ✔ Support XCTest
 ```swift
 // Given
