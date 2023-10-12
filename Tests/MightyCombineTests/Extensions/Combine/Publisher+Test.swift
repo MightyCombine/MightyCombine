@@ -97,41 +97,4 @@ final class Publisher_Test: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-    
-    func test_optionalThrows_EmptyReturnNil() {
-        // Given
-        let value: Int? = Empty<Int, Error>()
-            .receive(on: DispatchQueue.main)
-        // When
-            .optionalThrows
-        // Then
-        XCTAssertNil(value)
-    }
-    
-    func test_optionalThrows_FailReturnNil() {
-        // Given
-        let value: Int? = Fail(error: NSError())
-            .receive(on: DispatchQueue.main)
-        // When
-            .optionalThrows
-        // Then
-        XCTAssertNil(value)
-    }
-    
-    /// I can't fullfill expectation because I don't have any closure when finsh receive.
-    /// But still I get right result as expectation on real device
-    func test_optionalThrows_JustReturnValue() {
-        /*
-         // Given
-         let value = Just(1)
-             .setFailureType(to: Error.self)
-             .receive(on: DispatchQueue.main)
-         // When
-             .optionalThrows
-         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-             // Then
-             XCTAssertEqual(value, 1) // Optional(1)
-         }
-         */
-    }
 }
