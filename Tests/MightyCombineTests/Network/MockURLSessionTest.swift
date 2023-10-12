@@ -29,7 +29,7 @@ final class MockURLSessionTest: XCTestCase {
         Task {
             
             //  When
-            let user: User? = try? await sut.request(.init(url: url)) {
+            let user: User? = try? await sut.requestPublisher(.init(url: url)) {
                 guard (200...299).contains($0.statusCode) else {
                     throw NSError(domain: "Bad StatusCode", code: $0.statusCode)
                 }
