@@ -16,14 +16,23 @@ public struct MockURLSession: URLSessionable {
         self.response = response
     }
     
-    public func requestPublisher<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main) -> AnyPublisher<T, Error> where T : Decodable {
+    public func requestPublisher<T>(
+        _ urlRequest: URLRequest,
+        expect: T.Type? = nil,
+        scheduler: DispatchQueue = DispatchQueue.main
+    ) -> AnyPublisher<T, Error> where T : Decodable {
         Empty()
             .receive(on: scheduler)
             .eraseToAnyPublisher()
     }
     
     @available(macOS 10.15, *)
-    public func requestPublisher<T>(_ urlRequest: URLRequest, scheduler: DispatchQueue = DispatchQueue.main, responseHandler: @escaping (HTTPURLResponse) throws -> Void) -> AnyPublisher<T, Error> where T : Decodable {
+    public func requestPublisher<T>(
+        _ urlRequest: URLRequest,
+        expect: T.Type? = nil,
+        scheduler: DispatchQueue = DispatchQueue.main,
+        responseHandler: @escaping (HTTPURLResponse) throws -> Void
+    ) -> AnyPublisher<T, Error> where T : Decodable {
         guard let response = response else {
             return Empty()
                 .receive(on: scheduler)
@@ -42,7 +51,12 @@ public struct MockURLSession: URLSessionable {
         }
     }
     
-    public func uploadPublisher<T>(for request: URLRequest, from bodyData: Data, scheduler: DispatchQueue = .main) -> AnyPublisher<T, Error> where T : Decodable {
+    public func uploadPublisher<T>(
+        for request: URLRequest,
+        from bodyData: Data,
+        expect: T.Type? = nil,
+        scheduler: DispatchQueue = .main
+    ) -> AnyPublisher<T, Error> where T : Decodable {
         Empty()
             .receive(on: scheduler)
             .eraseToAnyPublisher()
@@ -52,6 +66,7 @@ public struct MockURLSession: URLSessionable {
     public func uploadPublisher<T: Decodable>(
         for request: URLRequest,
         from bodyData: Data,
+        expect: T.Type? = nil,
         scheduler: DispatchQueue = .main,
         responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
     ) -> AnyPublisher<T, Error> {

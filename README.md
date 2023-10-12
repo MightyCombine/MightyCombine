@@ -23,7 +23,7 @@ textField.textPublisher
 ## ✔ Support URLRequest
 ```swift 
 URLRequest(url: url)
-    .request(expect: User.self)
+    .requestPublisher(expect: User.self)
     .sink { _ in
         
     } receiveValue: { user in
@@ -36,7 +36,7 @@ URLRequest(url: url)
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
-    .request(expect: User.self)
+    .requestPublisher(expect: User.self)
     .sink { _ in
         
     } receiveValue: { user in

@@ -14,6 +14,7 @@ extension URLSession: URLSessionable {
     
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
+        expect: T.Type? = nil,
         scheduler: DispatchQueue = .main
     ) -> AnyPublisher<T, Error> where T : Decodable {
         self.dataTaskPublisher(for: urlRequest)
@@ -26,6 +27,7 @@ extension URLSession: URLSessionable {
     @available(macOS 10.15, *)
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
+        expect: T.Type? = nil,
         scheduler: DispatchQueue = .main,
         responseHandler: @escaping (HTTPURLResponse) throws -> Void
     ) -> AnyPublisher<T, Error> where T : Decodable {
@@ -44,6 +46,7 @@ extension URLSession: URLSessionable {
     public func uploadPublisher<T>(
         for request: URLRequest,
         from bodyData: Data,
+        expect: T.Type? = nil,
         scheduler: DispatchQueue = .main
     ) -> AnyPublisher<T, Error> where T : Decodable {
         return Future<T, Error> { promise in
@@ -68,6 +71,7 @@ extension URLSession: URLSessionable {
     public func uploadPublisher<T: Decodable>(
         for request: URLRequest,
         from bodyData: Data,
+        expect: T.Type? = nil,
         scheduler: DispatchQueue = .main,
         responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
     ) -> AnyPublisher<T, Error> {
