@@ -26,7 +26,7 @@ class UserNetwork {
         EndPoint
             .init(self.baseURL)
             .urlPaths(["/users", "/\(username)"])
-            .request(expect: User.self, with: self.session)
+            .requestPublisher(expect: User.self, with: self.session)
     }
 }
 

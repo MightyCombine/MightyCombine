@@ -41,7 +41,7 @@ public extension EndPointable {
         return new
     }
     
-    func request<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
+    func requestPublisher<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
         sesssion.requestPublisher(self.urlRequest)
     }
 }
