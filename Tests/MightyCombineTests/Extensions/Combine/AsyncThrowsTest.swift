@@ -17,7 +17,7 @@ final class AsyncThrowsTest: XCTestCase {
             do {
                 let _ = try await Empty<Any, Error>()
                     .asyncThrows
-            } catch let error {
+            } catch {
                 XCTAssertNotNil(error as? AnyPublisherError)
                 if let error = error as? AnyPublisherError {
                     XCTAssertEqual(error, AnyPublisherError.finishedWithoutValue)
@@ -31,7 +31,7 @@ final class AsyncThrowsTest: XCTestCase {
             do {
                 let _ = try await Fail<Any, TestError>(error: TestError.testError)
                     .asyncThrows
-            } catch let error {
+            } catch {
                 XCTAssertNotNil(error as? TestError)
                 if let error = error as? TestError {
                     XCTAssertEqual(error, TestError.testError)

@@ -54,7 +54,7 @@ public extension Publisher {
                     do {
                         let output = try await transform(value)
                         promise(.success(output))
-                    } catch let error {
+                    } catch {
                         promise(.failure(error))
                     }
                 }

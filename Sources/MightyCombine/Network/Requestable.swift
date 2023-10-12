@@ -13,6 +13,6 @@ public protocol Requestable { }
 public extension Requestable where Self == URLRequest {
     
     func request<T: Decodable>(expect type: T.Type, scheduler: DispatchQueue = .main , with sesssion: URLSessionable = URLSession.shared) -> AnyPublisher<T, Error> {
-        sesssion.request(self, scheduler: scheduler)
+        sesssion.requestPublisher(self, scheduler: scheduler)
     }
 }
