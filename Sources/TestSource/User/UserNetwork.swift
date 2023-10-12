@@ -20,6 +20,6 @@ class UserNetwork {
     lazy var getUser: (String) -> AnyPublisher<User, Error> = { username in
         let urlString = "https://api.github.com/users/" + username
         let request = URLRequest(url: .init(string: urlString)!)
-        return self.session.request(request)
+        return self.session.requestPublisher(request)
     }
 }
