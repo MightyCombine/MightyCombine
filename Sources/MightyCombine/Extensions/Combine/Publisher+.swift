@@ -10,20 +10,6 @@ import Combine
 
 public extension Publisher {
     
-    var optionalThrows: Output? {
-        get {
-            var output: Output? = nil
-            var cancellable: AnyCancellable?
-            cancellable = first()
-                .sink { completion in
-                    cancellable?.cancel()
-                } receiveValue: { value in
-                    output = value
-                }
-            return output
-        }
-    }
-    
     var asyncThrows: Output {
         get async throws {
             try await withCheckedThrowingContinuation { continuation in
