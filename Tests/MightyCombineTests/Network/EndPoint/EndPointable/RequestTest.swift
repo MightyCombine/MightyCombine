@@ -18,7 +18,7 @@ final class RequestTest: XCTestCase {
     let sut = EndPoint
         .init("https://api.github.com")
     // When
-        .request(
+        .requestPublisher(
             expect: User.self,
             with: URLSession.mockSession
         )
