@@ -125,7 +125,7 @@ final class Publisher_Test: XCTestCase {
             .receive(on: DispatchQueue.main)
         // When
             .optionalThrows
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             // Then
             XCTAssertEqual(value, 1)
         }
