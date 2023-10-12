@@ -5,6 +5,7 @@
 //  Created by 김인섭 on 10/11/23.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
 @main
@@ -16,3 +17,5 @@ struct ExampleApp: App {
         }
     }
 }
+
+#endif
