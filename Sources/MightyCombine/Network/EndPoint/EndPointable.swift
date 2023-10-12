@@ -19,5 +19,8 @@ public protocol EndPointable {
     var method: HttpMethod { get set }
     var urlRequest: URLRequest { get }
     
-    func requestPublisher<T: Decodable>(expect type: T.Type, with sesssion: URLSessionable) -> AnyPublisher<T, Error>
+    func requestPublisher<T: Decodable>(
+        expect type: T.Type,
+        with sesssion: URLSessionable
+    ) -> AnyPublisher<T, Error>
 }
