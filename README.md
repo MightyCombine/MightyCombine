@@ -7,51 +7,6 @@
 
 > We build powerful and convenient features using Combine and Swift.
 
-## ✔ Support UIKit
-```swift 
-button.eventPublisher(for: .touchUpInside)
-    .sink { _ in
-        print("TAP")
-    }.store(in: &store)
-    
-textField.textPublisher
-    .sink { text in
-        print(text)
-    }.store(in: &store)
-```
-
-## ✔ Support URLRequest
-```swift 
-URLRequest(url: url)
-    .requestPublisher(expect: User.self)
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
-```
-
-## ✔ Support EndPoint
-```Swift
-EndPoint
-    .init("https://api.github.com")
-    .urlPaths(["/users", "/octocat"])
-    .requestPublisher(expect: User.self)
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
-```
-
-## ✔ Support async/ await and throws
-```swift 
-Task {
-    let user = try? await userNetwork.getUser("octopus").asyncThrows
-    print(user)
-}
-```
-
 ## ✔ Support asyncMap and asyncThrowsMap
 ```swift 
 userNetwork.getUser("octocat")
@@ -73,6 +28,14 @@ userNetwork.getUser("octocat")
     }, receiveValue: { _ in
         
     }).store(in: &store)
+```
+
+## ✔ Support async/ await and throws
+```swift 
+Task {
+    let user = try? await userNetwork.getUser("octopus").asyncThrows
+    print(user)
+}
 ```
 
 ## ✔ Support XCTest
@@ -106,6 +69,43 @@ Task {
         XCTAssertEqual(mockData.id, user.id)
     }
 }
+```
+
+## ✔ Support EndPoint
+```Swift
+EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .requestPublisher(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
+## ✔ Support URLRequest
+```swift 
+URLRequest(url: url)
+    .requestPublisher(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
+## ✔ Support UIKit
+```swift 
+button.eventPublisher(for: .touchUpInside)
+    .sink { _ in
+        print("TAP")
+    }.store(in: &store)
+    
+textField.textPublisher
+    .sink { text in
+        print(text)
+    }.store(in: &store)
 ```
 
 # 💪 MightySwift
