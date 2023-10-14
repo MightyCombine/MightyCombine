@@ -62,13 +62,13 @@ public extension EndPointable {
     ) -> AnyPublisher<T, Error> {
         
         if let session = self.session {
-            session.requestPublisher(
+            return session.requestPublisher(
                 self.urlRequest,
                 scheduler: scheduler,
                 responseHandler: responseHandler
             )
         } else {
-            sesssion.requestPublisher(
+            return sesssion.requestPublisher(
                 self.urlRequest,
                 scheduler: scheduler,
                 responseHandler: responseHandler
