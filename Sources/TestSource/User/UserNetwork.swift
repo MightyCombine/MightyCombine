@@ -11,6 +11,7 @@ import MightyCombine
 
 class UserNetwork {
     
+    static let baseUrl = "https://api.github.com"
     let session: URLSessionable
     
     init(session: URLSessionable = URLSession.shared) {
@@ -18,7 +19,7 @@ class UserNetwork {
     }
     
     lazy var getUser: (String) -> AnyPublisher<User, Error> = { username in
-        let urlString = "https://api.github.com/users/" + username
+        let urlString = UserNetwork.baseUrl + "/users/" + username
         let request = URLRequest(url: .init(string: urlString)!)
         return self.session.requestPublisher(request)
     }

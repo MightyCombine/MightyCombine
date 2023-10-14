@@ -17,6 +17,7 @@ struct DefaultEndPoint: EndPointable {
     var headers: [String : String]?
     var body: [String : Any]?
     var method: HttpMethod
+    var responseHandler: ((HTTPURLResponse) throws -> Void)?
     
     init(
         baseURL: String,
@@ -24,7 +25,8 @@ struct DefaultEndPoint: EndPointable {
         queries: [String : String]? = nil,
         headers: [String : String]? = nil,
         body: [String : Any]? = nil,
-        method: HttpMethod
+        method: HttpMethod,
+        responseHandler: ((HTTPURLResponse) throws -> Void)? = nil 
     ) {
         self.baseURL = baseURL
         self.paths = paths
@@ -32,6 +34,7 @@ struct DefaultEndPoint: EndPointable {
         self.headers = headers
         self.body = body
         self.method = method
+        self.responseHandler = responseHandler
     }
     
     var urlRequest: URLRequest {

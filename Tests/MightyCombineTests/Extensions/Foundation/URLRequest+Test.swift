@@ -24,7 +24,6 @@ final class URLRequest_Test: XCTestCase {
         urlRequest
             .requestPublisher(expect: User.self, with: URLSession.mockSession)
             .inject(.success(mock))
-            .receive(on: DispatchQueue.main)
         // Then
             .sink { completion in
                 XCTAssertNil( completion.error)
