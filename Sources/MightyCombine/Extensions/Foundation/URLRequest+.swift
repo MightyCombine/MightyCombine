@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-extension URLRequest: Requestable {
+extension URLRequest {
     
     @available(macOS 10.15, *)
     public func requestPublisher<T: Decodable>(
