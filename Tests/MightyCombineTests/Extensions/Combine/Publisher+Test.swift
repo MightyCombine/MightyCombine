@@ -24,7 +24,6 @@ final class Publisher_Test: XCTestCase {
         
         userNetwork.getUser("octocat")
             .inject(.success(.init(id: 0, login: "octocat")))
-            .receive(on: DispatchQueue.main)
         // When
             .asyncThrowsMap({ _ in
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
