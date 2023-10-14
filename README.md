@@ -9,8 +9,8 @@
 
 ## ✔ Support asyncMap and asyncThrowsMap
 ```swift 
-userNetwork.getUser("octocat")
-    .asyncMap({ user in
+Just("Value")
+    .asyncMap({ value in
         await doSomething()
     })
     .sink(receiveCompletion: { _ in
@@ -19,7 +19,7 @@ userNetwork.getUser("octocat")
         
     }).store(in: &store)
 
-userNetwork.getUser("octocat")
+Just("Value")
     .asyncThrowsMap({ user in
         try await doSomething()
     })
@@ -33,8 +33,8 @@ userNetwork.getUser("octocat")
 ## ✔ Support async/ await and throws
 ```swift 
 Task {
-    let user = try? await userNetwork.getUser("octopus").asyncThrows
-    print(user)
+    let result = try? await Just("Value).asyncThrows
+    print(result)
 }
 ```
 
@@ -93,7 +93,7 @@ let response = HTTPURLResponse(
     httpVersion: nil,
     headerFields: nil
 )
-let sut = MockURLSession(response: response)
+let mockSession = MockURLSession(response: response)
 ```
 
 ## ✔ Support URLRequest
