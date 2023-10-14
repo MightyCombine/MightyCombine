@@ -7,6 +7,7 @@
 
 import Foundation
 import MightySwift
+import Combine
 
 public struct EndPoint: EndPointable {
     
@@ -16,6 +17,7 @@ public struct EndPoint: EndPointable {
     public var headers: [String: String]?
     public var body: [String: Any]?
     public var method: HttpMethod
+    public var responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     
     public init(
         _ baseURL: String,
@@ -23,7 +25,8 @@ public struct EndPoint: EndPointable {
         queries: [String: String]? = nil,
         headers: [String: String]? = nil,
         body: [String: Any]? = nil,
-        method: HttpMethod = .get
+        method: HttpMethod = .get,
+        responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) {
         self.baseURL = baseURL
         self.paths = paths
@@ -31,6 +34,7 @@ public struct EndPoint: EndPointable {
         self.headers = headers
         self.body = body
         self.method = method
+        self.responseHandler = responseHandler
     }
     
     public var urlRequest: URLRequest {
