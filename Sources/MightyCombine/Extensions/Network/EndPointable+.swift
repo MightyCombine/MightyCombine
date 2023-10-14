@@ -42,10 +42,16 @@ public extension EndPointable {
     }
     
     func responseHandler(
-        _ responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
+        _ responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> Self {
         var new = self
         new.responseHandler = responseHandler
+        return new
+    }
+    
+    func urlSession(_ session: URLSessionable?) -> Self {
+        var new = self
+        new.session = session
         return new
     }
     
@@ -54,10 +60,19 @@ public extension EndPointable {
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
-        sesssion.requestPublisher(
-            self.urlRequest,
-            scheduler: scheduler,
-            responseHandler: responseHandler
-        )
+        
+        if let session = self.session {
+            session.requestPublisher(
+                self.urlRequest,
+                scheduler: scheduler,
+                responseHandler: responseHandler
+            )
+        } else {
+            sesssion.requestPublisher(
+                self.urlRequest,
+                scheduler: scheduler,
+                responseHandler: responseHandler
+            )
+        }
     }
 }

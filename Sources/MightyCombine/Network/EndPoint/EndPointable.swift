@@ -19,4 +19,5 @@ public protocol EndPointable {
     var method: HttpMethod { get set }
     var responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? { get set }
     var urlRequest: URLRequest { get }
+    var session: URLSessionable? { get set }
 }
