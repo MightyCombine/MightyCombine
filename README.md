@@ -33,7 +33,7 @@ Just("Value")
 ## ✔ Support async/ await and throws
 ```swift 
 Task {
-    let result = try? await Just("Value).asyncThrows
+    let result = try? await Just("Value").asyncThrows
     print(result)
 }
 ```
