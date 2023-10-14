@@ -15,6 +15,15 @@ public struct MockURLSession: URLSessionable {
     public init(response: HTTPURLResponse? = nil) {
         self.response = response
     }
+}
+
+extension MockURLSession {
+    
+    public func urlResponse(_ response: HTTPURLResponse?) -> Self {
+        var new = self
+        new.response = response
+        return new
+    }
     
     @available(macOS 10.15, *)
     public func requestPublisher<T>(

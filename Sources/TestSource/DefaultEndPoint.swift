@@ -18,6 +18,7 @@ struct DefaultEndPoint: EndPointable {
     var body: [String : Any]?
     var method: HttpMethod
     var responseHandler: ((HTTPURLResponse) throws -> Void)?
+    var session: URLSessionable?
     
     init(
         baseURL: String,
@@ -25,8 +26,9 @@ struct DefaultEndPoint: EndPointable {
         queries: [String : String]? = nil,
         headers: [String : String]? = nil,
         body: [String : Any]? = nil,
-        method: HttpMethod,
-        responseHandler: ((HTTPURLResponse) throws -> Void)? = nil 
+        method: HttpMethod = .get,
+        responseHandler: ((HTTPURLResponse) throws -> Void)? = nil,
+        session: URLSessionable? = nil
     ) {
         self.baseURL = baseURL
         self.paths = paths
@@ -35,6 +37,7 @@ struct DefaultEndPoint: EndPointable {
         self.body = body
         self.method = method
         self.responseHandler = responseHandler
+        self.session = session
     }
     
     var urlRequest: URLRequest {
