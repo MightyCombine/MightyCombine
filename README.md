@@ -38,6 +38,20 @@ Task {
 }
 ```
 
+## ✔ Support EndPoint
+```Swift
+EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .responseHandler(handleResponse(_:))
+    .requestPublisher(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
 ## ✔ Support XCTest
 ```swift
 // Given
@@ -71,17 +85,15 @@ Task {
 }
 ```
 
-## ✔ Support EndPoint
-```Swift
-EndPoint
-    .init("https://api.github.com")
-    .urlPaths(["/users", "/octocat"])
-    .requestPublisher(expect: User.self)
-    .sink { _ in
-        
-    } receiveValue: { user in
-        print(user)
-    }.store(in: &store)
+```swift
+let url = URL(string: "https://api.github.com/users/octopus")!
+let response = HTTPURLResponse(
+    url: url,
+    statusCode: 500,
+    httpVersion: nil,
+    headerFields: nil
+)
+let sut = MockURLSession(response: response)
 ```
 
 ## ✔ Support URLRequest
