@@ -10,25 +10,12 @@ import Combine
 
 public protocol URLSessionable {
     
-    func requestPublisher<T: Decodable>(
-        _ urlRequest: URLRequest,
-        expect: T.Type?,
-        scheduler: DispatchQueue
-    ) -> AnyPublisher<T, Error>
-    
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type?,
         scheduler: DispatchQueue,
-        responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
-    ) -> AnyPublisher<T, Error>
-    
-    func uploadPublisher<T: Decodable>(
-        for request: URLRequest,
-        from bodyData: Data,
-        expect: T.Type?,
-        scheduler: DispatchQueue
+        responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
     
     @available(macOS 10.15, *)
@@ -37,30 +24,18 @@ public protocol URLSessionable {
         from bodyData: Data,
         expect: T.Type?,
         scheduler: DispatchQueue,
-        responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
+        responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
 }
 
 public extension URLSessionable {
-    
-    func requestPublisher<T: Decodable>(
-        _ urlRequest: URLRequest,
-        expect: T.Type? = nil,
-        scheduler: DispatchQueue = .main
-    ) -> AnyPublisher<T, Error> {
-        requestPublisher(
-            urlRequest,
-            expect: expect,
-            scheduler: scheduler
-        )
-    }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
         scheduler: DispatchQueue = .main,
-        responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
+        responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
         requestPublisher(
             urlRequest,
@@ -70,27 +45,13 @@ public extension URLSessionable {
         )
     }
     
-    func uploadPublisher<T>(
-        for request: URLRequest,
-        from bodyData: Data,
-        expect: T.Type? = nil,
-        scheduler: DispatchQueue = .main
-    ) -> AnyPublisher<T, Error> where T : Decodable {
-        uploadPublisher(
-            for: request,
-            from: bodyData,
-            expect: expect,
-            scheduler: scheduler
-        )
-    }
-    
     @available(macOS 10.15, *)
     func uploadPublisher<T: Decodable>(
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
         scheduler: DispatchQueue = .main,
-        responseHandler: @escaping (_ response: HTTPURLResponse) throws -> Void
+        responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
         uploadPublisher(
             for: request,
