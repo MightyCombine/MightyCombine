@@ -34,6 +34,30 @@ public extension Publisher {
         }
     }
     
+    var asyncOptionalTry: Output? {
+        get async {
+            await withCheckedContinuation { continuation in
+                var cancellable: AnyCancellable?
+                var finishedWithoutValue = true
+                cancellable = first()
+                    .sink(receiveCompletion: { compltion in
+                        switch compltion {
+                        case .finished:
+                            if finishedWithoutValue {
+                                continuation.resume(returning: nil)
+                            }
+                        case .failure(_):
+                            continuation.resume(returning: nil)
+                        }
+                        cancellable?.cancel()
+                    }, receiveValue: { value in
+                        finishedWithoutValue = false
+                        continuation.resume(returning: value)
+                    })
+            }
+        }
+    }
+    
     @available(macOS 10.15, *)
     func asyncMap<T>(_ transform: @escaping (Output) async -> T) -> Publishers.FlatMap<Future<T, Failure>, Self> {
         flatMap { value in
