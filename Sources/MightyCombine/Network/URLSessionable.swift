@@ -10,6 +10,8 @@ import Combine
 
 public protocol URLSessionable {
     
+    static var printLog: Bool { get }
+    
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
@@ -29,6 +31,30 @@ public protocol URLSessionable {
 }
 
 public extension URLSessionable {
+    
+    var requestLog: (URLRequest) -> String {{ request in
+        
+        var body: Any?
+        if let data = request.httpBody {
+            body = try? JSONSerialization.jsonObject(with: data)
+        }
+        return """
+        🛜 Network request log
+        - absoluteURL: \(request.url?.absoluteString ?? "")
+        - header: \(request.allHTTPHeaderFields ?? [:])
+        - method: \(request.httpMethod ?? "")
+        - body: \(body ?? "")
+        """
+    }}
+    
+    var responseLog: (HTTPURLResponse, Data) -> String {{ response, data in
+        let data = try? JSONSerialization.jsonObject(with: data)
+        return """
+        🛜 Network response log
+        - statusCode: \(response.statusCode)
+        - data: \(data ?? "")
+        """
+    }}
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
