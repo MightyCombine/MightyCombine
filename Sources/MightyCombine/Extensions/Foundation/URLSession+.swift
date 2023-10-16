@@ -44,10 +44,14 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
+        if Self.printLog { print(requestLog(request)) }
         return Future<T, Error> { promise in
             self.uploadTask(with: request, from: bodyData) { data, response, error in
                 do {
                     if let response = response as? HTTPURLResponse {
+                        if Self.printLog {
+                            print(self.responseLog(response, data))
+                        }
                         try responseHandler?(response)
                     }
                     if let error = error {

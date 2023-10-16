@@ -33,7 +33,6 @@ public protocol URLSessionable {
 public extension URLSessionable {
     
     var requestLog: (URLRequest) -> String {{ request in
-        
         var body: Any?
         if let data = request.httpBody {
             body = try? JSONSerialization.jsonObject(with: data)
@@ -47,12 +46,15 @@ public extension URLSessionable {
         """
     }}
     
-    var responseLog: (HTTPURLResponse, Data) -> String {{ response, data in
-        let data = try? JSONSerialization.jsonObject(with: data)
+    var responseLog: (HTTPURLResponse, Data?) -> String {{ response, data in
+        var body: Any?
+        if let data = data {
+            body = try? JSONSerialization.jsonObject(with: data)
+        }
         return """
         🛜 Network response log
         - statusCode: \(response.statusCode)
-        - data: \(data ?? "")
+        - data: \(body ?? "")
         """
     }}
     
