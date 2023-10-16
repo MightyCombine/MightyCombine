@@ -13,9 +13,9 @@ final class AsnycOptionalThrowsTest: XCTestCase {
 
     func test_Just_return_Value() throws {
         Task {
-            let value = try await Just("Value")
+            let value = await Just("Value")
                 .receive(on: DispatchQueue.main)
-                .asyncThrows
+                .asyncOptionalTry
             
             XCTAssertEqual(value, "Value")
         }
