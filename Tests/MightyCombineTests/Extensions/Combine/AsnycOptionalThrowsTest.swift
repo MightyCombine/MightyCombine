@@ -12,7 +12,7 @@ import Combine
 
 final class AsnycOptionalThrowsTest: XCTestCase {
 
-    func test_Just_return_Value() throws {
+    func test_Just_return_Value() {
         Task {
             let value = await Just("Value")
                 .receive(on: DispatchQueue.main)
@@ -22,10 +22,21 @@ final class AsnycOptionalThrowsTest: XCTestCase {
         }
     }
     
-    func test_Fail_return_nil() throws {
+    func test_Fail_return_nil() {
         Task {
             let value = await Fail<Any, TestError>(error: TestError.testError)
                 .receive(on: DispatchQueue.main)
+                .asyncOptionalTry
+            
+            XCTAssertNil(value)
+        }
+    }
+    
+    func test_Empty_return_nil() {
+        Task {
+            let value = await Empty<Any, Never>()
+                .receive(on: DispatchQueue.main)
+                .setFailureType(to: Error.self)
                 .asyncOptionalTry
             
             XCTAssertNil(value)

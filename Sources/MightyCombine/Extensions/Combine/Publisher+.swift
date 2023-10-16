@@ -28,7 +28,7 @@ public extension Publisher {
                         cancellable?.cancel()
                     } receiveValue: { value in
                         finishedWithoutValue = false
-                        continuation.resume(with: .success(value))
+                        continuation.resume(returning: value)
                     }
             }
         }
