@@ -34,12 +34,12 @@ Just("Value")
 ```swift 
 Task {
     let result = try? await Just("Value").asyncThrows
-    print(result) 
+    print(result) // Optional("Value")
 }
 
 Task {
-    let result = await Just("Value").asyncOptionalTry
-    print(result)
+    let result = await Fail<Any, TestError>(error: TestError.testError).asyncOptionalTry
+    print(result) // nil
 }
 ```
 
