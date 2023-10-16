@@ -61,18 +61,30 @@ public extension EndPointable {
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
         
-        if let session = self.session {
-            return session.requestPublisher(
-                self.urlRequest,
-                scheduler: scheduler,
-                responseHandler: responseHandler
-            )
-        } else {
-            return sesssion.requestPublisher(
-                self.urlRequest,
-                scheduler: scheduler,
-                responseHandler: responseHandler
-            )
-        }
+        let session = self.session ?? sesssion
+        
+        return session.requestPublisher(
+            self.urlRequest,
+            scheduler: scheduler,
+            responseHandler: responseHandler
+        )
+    }
+    
+    func uploadPublisher<T: Decodable>(
+        from bodyData: Data,
+        expect: T.Type? = nil,
+        scheduler: DispatchQueue = .main,
+        with sesssion: URLSessionable = URLSession.shared
+    ) -> AnyPublisher<T, Error> {
+        
+        let session = self.session ?? sesssion
+        
+        return session.uploadPublisher(
+            for: self.urlRequest,
+            from: bodyData,
+            expect: expect,
+            scheduler: scheduler,
+            responseHandler: self.responseHandler
+        )
     }
 }
