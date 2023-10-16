@@ -20,12 +20,12 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
-        if Self.printLog { print(requestLog(urlRequest)) }
+        if Self.printLog { printRequestLog(urlRequest) }
         return self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
                     if Self.printLog {
-                        print(self.responseLog(response, data))
+                        self.printResponseLog(response, data: data)
                     }
                     try responseHandler?(response)
                 }
@@ -44,13 +44,13 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
-        if Self.printLog { print(requestLog(request)) }
+        if Self.printLog { printRequestLog(request) }
         return Future<T, Error> { promise in
             self.uploadTask(with: request, from: bodyData) { data, response, error in
                 do {
                     if let response = response as? HTTPURLResponse {
                         if Self.printLog {
-                            print(self.responseLog(response, data))
+                            self.printResponseLog(response, data: data)
                         }
                         try responseHandler?(response)
                     }

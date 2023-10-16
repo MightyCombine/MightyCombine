@@ -32,31 +32,34 @@ public protocol URLSessionable {
 
 public extension URLSessionable {
     
-    var requestLog: (URLRequest) -> String {{ request in
+    func printRequestLog(_ request: URLRequest) {
         var body: Any?
         if let data = request.httpBody {
             body = try? JSONSerialization.jsonObject(with: data)
         }
-        return """
-        🛜 Network request log
-        - absoluteURL: \(request.url?.absoluteString ?? "")
-        - header: \(request.allHTTPHeaderFields ?? [:])
-        - method: \(request.httpMethod ?? "")
-        - body: \(body ?? "")
+        let log = """
+        🔵 Network Request Log
+            - absoluteURL: \(request.url?.absoluteString ?? "")
+            - header: \(request.allHTTPHeaderFields ?? [:])
+            - method: \(request.httpMethod ?? "")
+            - body: \(body ?? "")
         """
-    }}
+        print(log)
+    }
     
-    var responseLog: (HTTPURLResponse, Data?) -> String {{ response, data in
+    func printResponseLog(_ response: HTTPURLResponse, data: Data?) {
         var body: Any?
         if let data = data {
             body = try? JSONSerialization.jsonObject(with: data)
         }
-        return """
-        🛜 Network response log
-        - statusCode: \(response.statusCode)
-        - data: \(body ?? "")
+        let log = """
+        🔴 Network Response Log
+            - absoluteURL: \(response.url?.absoluteString ?? "")
+            - statusCode: \(response.statusCode)
+            - data: \(body ?? "")
         """
-    }}
+        print(log)
+    }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
