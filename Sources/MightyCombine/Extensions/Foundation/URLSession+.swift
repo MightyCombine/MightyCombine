@@ -9,7 +9,8 @@ import Foundation
 import Combine
 
 extension URLSession: URLSessionable {
-
+    
+    public static var printLog: Bool = false
     public static let mockSession = MockURLSession()
     
     @available(macOS 10.15, *)
@@ -19,9 +20,13 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
-        self.dataTaskPublisher(for: urlRequest)
+        if Self.printLog { print(requestLog(urlRequest)) }
+        return self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
+                    if Self.printLog {
+                        print(self.responseLog(response, data))
+                    }
                     try responseHandler?(response)
                 }
                 return data

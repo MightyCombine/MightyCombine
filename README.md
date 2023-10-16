@@ -101,6 +101,11 @@ let response = HTTPURLResponse(
 let mockSession = MockURLSession(response: response)
 ```
 
+## ✔ Support Network Log
+```swift
+URLSession.printLog = true
+```
+
 ## ✔ Support URLRequest
 ```swift 
 URLRequest(url: url)
