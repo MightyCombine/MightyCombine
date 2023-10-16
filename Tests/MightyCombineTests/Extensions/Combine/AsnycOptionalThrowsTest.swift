@@ -8,6 +8,7 @@
 import XCTest
 import Combine
 @testable import MightyCombine
+@testable import TestSource
 
 final class AsnycOptionalThrowsTest: XCTestCase {
 
@@ -23,7 +24,7 @@ final class AsnycOptionalThrowsTest: XCTestCase {
     
     func test_Fail_return_nil() throws {
         Task {
-            let value = await Just("Value")
+            let value = await Fail<Any, TestError>(error: TestError.testError)
                 .receive(on: DispatchQueue.main)
                 .asyncOptionalTry
             
