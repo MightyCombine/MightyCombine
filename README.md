@@ -34,6 +34,11 @@ Just("Value")
 ```swift 
 Task {
     let result = try? await Just("Value").asyncThrows
+    print(result) 
+}
+
+Task {
+    let result = await Just("Value").asyncOptionalTry
     print(result)
 }
 ```
