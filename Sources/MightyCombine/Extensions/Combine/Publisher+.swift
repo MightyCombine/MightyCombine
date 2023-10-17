@@ -58,7 +58,7 @@ public extension Publisher {
         }
     }
     
-    func asyncReplaceError(with replaceValue: Output) async -> Output? {
+    func asyncReplaceError(with replaceValue: Output) async -> Output {
         await withCheckedContinuation { continuation in
             var cancellable: AnyCancellable?
             var finishedWithoutValue = true
