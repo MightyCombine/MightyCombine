@@ -35,6 +35,7 @@ public protocol URLSessionable {
 public extension URLSessionable {
     
     func printRequestLog(_ request: URLRequest, logStyle: DataLogStyle) {
+        #if DEBUG
         var body: Any?
         if let data = request.httpBody {
             switch logStyle {
@@ -52,9 +53,11 @@ public extension URLSessionable {
             - body: \(body ?? "")
         """
         print(log)
+        #endif
     }
     
     func printResponseLog(_ response: HTTPURLResponse, data: Data?, logStyle: DataLogStyle) {
+        #if DEBUG
         var body: Any?
         if let data = data {
             switch logStyle {
@@ -71,6 +74,7 @@ public extension URLSessionable {
             - data: \(body ?? "")
         """
         print(log)
+        #endif
     }
     
     @available(macOS 10.15, *)

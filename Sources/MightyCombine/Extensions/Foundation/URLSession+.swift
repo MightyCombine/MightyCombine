@@ -30,9 +30,7 @@ extension URLSession: URLSessionable {
                 if let response = response as? HTTPURLResponse {
                     if Self.printLog {
                         self.printResponseLog(
-                            response,
-                            data: data,
-                            logStyle: logStyle
+                            response, data: data, logStyle: logStyle
                         )
                     }
                     try responseHandler?(response)
@@ -62,9 +60,7 @@ extension URLSession: URLSessionable {
                     if let response = response as? HTTPURLResponse {
                         if Self.printLog {
                             self.printResponseLog(
-                                response,
-                                data: data,
-                                logStyle: logStyle
+                                response, data: data, logStyle: logStyle
                             )
                         }
                         try responseHandler?(response)
