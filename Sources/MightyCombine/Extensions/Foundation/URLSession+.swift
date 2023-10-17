@@ -11,6 +11,8 @@ import Combine
 extension URLSession: URLSessionable {
     
     public static var printLog: Bool = false
+    public static var logReadingOption: JSONSerialization.ReadingOptions = .fragmentsAllowed
+    
     public static let mockSession = MockURLSession()
     
     @available(macOS 10.15, *)

@@ -11,6 +11,7 @@ import Combine
 public protocol URLSessionable {
     
     static var printLog: Bool { get }
+    static var logReadingOption: JSONSerialization.ReadingOptions { get }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
@@ -35,7 +36,7 @@ public extension URLSessionable {
     func printRequestLog(_ request: URLRequest) {
         var body: Any?
         if let data = request.httpBody {
-            body = try? JSONSerialization.jsonObject(with: data)
+            body = try? JSONSerialization.jsonObject(with: data, options: Self.logReadingOption)
         }
         let log = """
         🛫 Network Request Log
@@ -50,7 +51,7 @@ public extension URLSessionable {
     func printResponseLog(_ response: HTTPURLResponse, data: Data?) {
         var body: Any?
         if let data = data {
-            body = try? JSONSerialization.jsonObject(with: data)
+            body = try? JSONSerialization.jsonObject(with: data, options: Self.logReadingOption)
         }
         let log = """
         🛬 Network Response Log
