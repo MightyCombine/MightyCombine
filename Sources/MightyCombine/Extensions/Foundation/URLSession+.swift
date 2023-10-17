@@ -11,7 +11,6 @@ import Combine
 extension URLSession: URLSessionable {
     
     public static var printLog: Bool = false
-    public static var dataLogStyle: DataLogStyle = .jsonSerialization
     
     public static let mockSession = MockURLSession()
     
@@ -19,15 +18,22 @@ extension URLSession: URLSessionable {
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
+        logStyle: DataLogStyle = .json,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
-        if Self.printLog { printRequestLog(urlRequest) }
+        if Self.printLog {
+            printRequestLog(urlRequest, logStyle: logStyle)
+        }
         return self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
                     if Self.printLog {
-                        self.printResponseLog(response, data: data)
+                        self.printResponseLog(
+                            response,
+                            data: data,
+                            logStyle: logStyle
+                        )
                     }
                     try responseHandler?(response)
                 }
@@ -43,16 +49,23 @@ extension URLSession: URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
+        logStyle: DataLogStyle = .json,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
-        if Self.printLog { printRequestLog(request) }
+        if Self.printLog {
+            printRequestLog(request, logStyle: logStyle)
+        }
         return Future<T, Error> { promise in
             self.uploadTask(with: request, from: bodyData) { data, response, error in
                 do {
                     if let response = response as? HTTPURLResponse {
                         if Self.printLog {
-                            self.printResponseLog(response, data: data)
+                            self.printResponseLog(
+                                response,
+                                data: data,
+                                logStyle: logStyle
+                            )
                         }
                         try responseHandler?(response)
                     }
@@ -73,5 +86,5 @@ extension URLSession: URLSessionable {
 }
 
 public enum DataLogStyle {
-    case jsonSerialization, string
+    case json, string
 }

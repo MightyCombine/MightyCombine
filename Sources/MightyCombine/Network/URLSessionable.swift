@@ -11,12 +11,12 @@ import Combine
 public protocol URLSessionable {
     
     static var printLog: Bool { get }
-    static var dataLogStyle: DataLogStyle { get }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type?,
+        logStyle: DataLogStyle,
         scheduler: DispatchQueue,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
@@ -26,6 +26,7 @@ public protocol URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type?,
+        logStyle: DataLogStyle,
         scheduler: DispatchQueue,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
@@ -33,11 +34,11 @@ public protocol URLSessionable {
 
 public extension URLSessionable {
     
-    func printRequestLog(_ request: URLRequest) {
+    func printRequestLog(_ request: URLRequest, logStyle: DataLogStyle) {
         var body: Any?
         if let data = request.httpBody {
-            switch Self.dataLogStyle {
-            case .jsonSerialization:
+            switch logStyle {
+            case .json:
                 body = try? JSONSerialization.jsonObject(with: data)
             case .string:
                 body = String(data: data, encoding: .utf8)
@@ -53,11 +54,11 @@ public extension URLSessionable {
         print(log)
     }
     
-    func printResponseLog(_ response: HTTPURLResponse, data: Data?) {
+    func printResponseLog(_ response: HTTPURLResponse, data: Data?, logStyle: DataLogStyle) {
         var body: Any?
         if let data = data {
-            switch Self.dataLogStyle {
-            case .jsonSerialization:
+            switch logStyle {
+            case .json:
                 body = try? JSONSerialization.jsonObject(with: data)
             case .string:
                 body = String(data: data, encoding: .utf8)
@@ -76,12 +77,14 @@ public extension URLSessionable {
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
+        logStyle: DataLogStyle = .json,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
         requestPublisher(
             urlRequest,
             expect: expect,
+            logStyle: logStyle,
             scheduler: scheduler,
             responseHandler: responseHandler
         )
@@ -92,6 +95,7 @@ public extension URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
+        logStyle: DataLogStyle = .json,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
@@ -99,6 +103,7 @@ public extension URLSessionable {
             for: request,
             from: bodyData,
             expect: expect,
+            logStyle: logStyle,
             scheduler: scheduler,
             responseHandler: responseHandler
         )

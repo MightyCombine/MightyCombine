@@ -147,7 +147,11 @@ let mockSession = MockURLSession(response: response)
 ## ✔ Support Network Log
 ```swift
 URLSession.printLog = true
-URLSession.logReadingOption = .fragmentsAllowed
+
+EndPoint
+    .init(basURL)
+    .urlPaths(paths)
+    .requestPublisher(expect: User.self, logStyle: .string) // logStyle Default = .json
 ```
 
 ## ✔ Support URLRequest

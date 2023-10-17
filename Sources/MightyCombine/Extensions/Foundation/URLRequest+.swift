@@ -13,9 +13,14 @@ extension URLRequest {
     @available(macOS 10.15, *)
     public func requestPublisher<T: Decodable>(
         expect type: T.Type,
+        logStyle: DataLogStyle = .json,
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
-        sesssion.requestPublisher(self, scheduler: scheduler)
+        sesssion.requestPublisher(
+            self,
+            logStyle: logStyle,
+            scheduler: scheduler
+        )
     }
 }
