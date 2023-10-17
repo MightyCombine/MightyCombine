@@ -38,8 +38,13 @@ Task {
 }
 
 Task {
-    let result = await Fail<Any, TestError>(error: TestError.testError).asyncOptionalTry
+    let result = await Fail(error: TestError.testError).asyncOptionalTry
     print(result) // nil
+}
+
+Task {
+    let result = await Fail(error: TestError.testError).asyncReplaceError(with: 10)
+    print(result) // 10
 }
 ```
 
