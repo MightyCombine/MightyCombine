@@ -46,6 +46,11 @@ Task {
     let result = await Fail(error: TestError.testError).asyncReplaceError(with: 10)
     print(result) // 10
 }
+
+Task {
+    let result = await Just(1).async
+    print(result) // 1
+}
 ```
 
 ## ✔ Support EndPoint
