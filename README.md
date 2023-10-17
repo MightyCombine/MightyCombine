@@ -9,6 +9,7 @@
 
 ## ✔ Support asyncMap and asyncThrowsMap
 ```swift 
+✅ asyncMap
 Just("Value")
     .asyncMap({ value in
         await doSomething()
@@ -19,6 +20,7 @@ Just("Value")
         
     }).store(in: &store)
 
+✅ asyncThrowsMap
 Just("Value")
     .asyncThrowsMap({ user in
         try await doSomething()
@@ -33,21 +35,19 @@ Just("Value")
 ## ✔ Support async/ await and throws
 ```swift 
 Task {
+    ✅ asyncThrows
     let result = try? await Just("Value").asyncThrows
     print(result) // Optional("Value")
-}
 
-Task {
+    ✅ asyncOptionalTry
     let result = await Fail(error: TestError.testError).asyncOptionalTry
     print(result) // nil
-}
 
-Task {
+    ✅ asyncReplaceError
     let result = await Fail(error: TestError.testError).asyncReplaceError(with: 10)
     print(result) // 10
-}
 
-Task {
+    ✅ async
     let result = await Just(1).async
     print(result) // 1
 }
@@ -55,6 +55,7 @@ Task {
 
 ## ✔ Support EndPoint
 ```Swift
+✅ EndPoint
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
@@ -71,10 +72,12 @@ EndPoint
 ```swift
 // Given
 let sut: UserNetwork = .init()
+✅ inject fail
 sut.getUser = { _ in .inject(.failure(NSError())) }
 
 Task {
     // When
+    ✅ asyncThrows
     let user = try? await sut.getUser("octopus").asyncThrows
     
     // Then
@@ -86,10 +89,12 @@ Task {
 // Given
 let sut: UserNetwork = .init()
 let mockData = User(login: "octopus", id: 112233)
+✅ inject success
 sut.getUser = { _ in .inject(.success(mockData)) }
 
 Task {
     // When
+    ✅ asyncThrows
     let user = try? await sut.getUser("octopus").asyncThrows 
     
     // Then
@@ -102,12 +107,14 @@ Task {
 
 ```swift
 let url = URL(string: "https://api.github.com/users/octopus")!
+✅ inject HTTPURLResponse
 let response = HTTPURLResponse(
     url: url,
     statusCode: 500,
     httpVersion: nil,
     headerFields: nil
 )
+✅ MockURLSession
 let mockSession = MockURLSession(response: response)
 ```
 
@@ -119,6 +126,7 @@ URLSession.printLog = true
 ## ✔ Support URLRequest
 ```swift 
 URLRequest(url: url)
+    ✅ requestPublisher
     .requestPublisher(expect: User.self)
     .sink { _ in
         
@@ -129,11 +137,13 @@ URLRequest(url: url)
 
 ## ✔ Support UIKit
 ```swift 
+✅ eventPublisher
 button.eventPublisher(for: .touchUpInside)
     .sink { _ in
         print("TAP")
     }.store(in: &store)
     
+✅ textPublisher
 textField.textPublisher
     .sink { text in
         print(text)
@@ -145,12 +155,14 @@ textField.textPublisher
 ## ✔ Array Extension 
 ```swift 
 let users: [User] = [.....]
+✅ find
 let user = users.find(\.login, "octocat") // Optional(User(login: "octocat"))
 ```
 
 ## ✔ Optional Extension 
 ```swift
 let optionalValue: Int? = nil
+✅ replaceNil
 let result = optionalValue.replaceNil(with: 10)
 print(result) // 10
 ```
@@ -159,6 +171,13 @@ print(result) // 10
 ```swift
 let urlRequest = URLRequest
     .init("https://api.github.com")
+    ✅ urlPaths
     .urlPaths(["/users", "/octocat"])
+    ✅ and more
+    // .urlQueries
+    // .httpMethod
+    // .httpBody
+    // .httpHeaders
+    // .requestPublisher
 ```
 
