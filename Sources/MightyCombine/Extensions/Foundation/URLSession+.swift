@@ -11,7 +11,7 @@ import Combine
 extension URLSession: URLSessionable {
     
     public static var printLog: Bool = false
-    public static var logReadingOption: JSONSerialization.ReadingOptions = .fragmentsAllowed
+    public static var dataLogStyle: DataLogStyle = .jsonSerialization
     
     public static let mockSession = MockURLSession()
     
@@ -70,4 +70,8 @@ extension URLSession: URLSessionable {
         .receive(on: scheduler)
         .eraseToAnyPublisher()
     }
+}
+
+public enum DataLogStyle {
+    case jsonSerialization, string
 }

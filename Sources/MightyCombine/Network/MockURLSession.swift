@@ -11,7 +11,7 @@ import Combine
 public struct MockURLSession: URLSessionable {
     
     public static var printLog: Bool = false
-    public static var logReadingOption: JSONSerialization.ReadingOptions = .fragmentsAllowed
+    public static var dataLogStyle: DataLogStyle = .jsonSerialization
     
     var response: HTTPURLResponse?
     
