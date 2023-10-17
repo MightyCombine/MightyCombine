@@ -110,6 +110,22 @@ public extension Publisher {
     }
 }
 
+public extension Publisher where Failure == Never {
+    
+    var async: Output {
+        get async {
+            await withCheckedContinuation { continuation in
+                var cancellable: AnyCancellable?
+                cancellable = first()
+                    .sink(receiveValue: { value in
+                        continuation.resume(returning: value)
+                        cancellable?.cancel()
+                    })
+            }
+        }
+    }
+}
+
 enum AnyPublisherError: Error {
     case finishedWithoutValue
 }

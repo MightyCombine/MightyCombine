@@ -38,7 +38,7 @@ public extension URLSessionable {
             body = try? JSONSerialization.jsonObject(with: data)
         }
         let log = """
-        🔵 Network Request Log
+        🟣 Network Request Log
             - absoluteURL: \(request.url?.absoluteString ?? "")
             - header: \(request.allHTTPHeaderFields ?? [:])
             - method: \(request.httpMethod ?? "")
@@ -53,7 +53,7 @@ public extension URLSessionable {
             body = try? JSONSerialization.jsonObject(with: data)
         }
         let log = """
-        🔴 Network Response Log
+        🟤 Network Response Log
             - absoluteURL: \(response.url?.absoluteString ?? "")
             - statusCode: \(response.statusCode)
             - data: \(body ?? "")
