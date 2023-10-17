@@ -22,17 +22,13 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
-        if Self.printLog {
-            printRequestLog(urlRequest, logStyle: logStyle)
-        }
+        printRequestLog(urlRequest, logStyle: logStyle)
         return self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
-                    if Self.printLog {
-                        self.printResponseLog(
-                            response, data: data, logStyle: logStyle
-                        )
-                    }
+                    self.printResponseLog(
+                        response, data: data, logStyle: logStyle
+                    )
                     try responseHandler?(response)
                 }
                 return data
@@ -51,18 +47,14 @@ extension URLSession: URLSessionable {
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
-        if Self.printLog {
-            printRequestLog(request, logStyle: logStyle)
-        }
+        printRequestLog(request, logStyle: logStyle)
         return Future<T, Error> { promise in
             self.uploadTask(with: request, from: bodyData) { data, response, error in
                 do {
                     if let response = response as? HTTPURLResponse {
-                        if Self.printLog {
-                            self.printResponseLog(
-                                response, data: data, logStyle: logStyle
-                            )
-                        }
+                        self.printResponseLog(
+                            response, data: data, logStyle: logStyle
+                        )
                         try responseHandler?(response)
                     }
                     if let error = error {
