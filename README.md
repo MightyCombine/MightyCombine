@@ -146,12 +146,17 @@ let mockSession = MockURLSession(response: response)
 
 ## ✔ Support Network Log
 ```swift
+✅ printLog
 URLSession.printLog = true
 
 EndPoint
     .init(basURL)
     .urlPaths(paths)
-    .requestPublisher(expect: User.self, logStyle: .string) // logStyle Default = .json
+    .requestPublisher(
+        expect: User.self,
+        ✅ logStyle Default = .json
+        logStyle: .string
+    )
 ```
 
 ## ✔ Support URLRequest
