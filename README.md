@@ -123,6 +123,7 @@ let mockSession = MockURLSession(response: response)
 ## ✔ Support Network Log
 ```swift
 URLSession.printLog = true
+URLSession.logReadingOption = .fragmentsAllowed
 ```
 
 ## ✔ Support URLRequest
