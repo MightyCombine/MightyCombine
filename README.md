@@ -9,8 +9,8 @@
 
 ## ✔ Support asyncMap and asyncThrowsMap
 ```swift 
-✅ asyncMap
 Just("Value")
+    ✅ asyncMap
     .asyncMap({ value in
         await doSomething()
     })
@@ -20,8 +20,8 @@ Just("Value")
         
     }).store(in: &store)
 
-✅ asyncThrowsMap
 Just("Value")
+    ✅ asyncThrowsMap
     .asyncThrowsMap({ user in
         try await doSomething()
     })
@@ -59,7 +59,9 @@ Task {
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
+    ✅ resoinseHandler
     .responseHandler(handleResponse(_:))
+    ✅ requestPublisher
     .requestPublisher(expect: User.self)
     .sink { _ in
         
