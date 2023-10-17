@@ -70,6 +70,30 @@ EndPoint
     }.store(in: &store)
 ```
 
+## ✔ Support File Upload and MultiPartFormData 
+```swift
+let formData = MultiPartFormData()
+let bodyData = formData.bodyData(    
+    data: data,
+    parameters: parameters,
+    name: "image",
+    filename: "imagename.png",
+    mimeType: "image/png"
+)
+
+EndPoint
+    .init(basURL)
+    .urlPaths(paths)
+    .httpHeaders(formData.headers)
+    .httpMethod(.post)
+    .uploadPublisher(from: bodyData, expect: Response.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+```
+
 ## ✔ Support XCTest
 ```swift
 // Given
