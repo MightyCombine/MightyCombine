@@ -11,7 +11,7 @@ public struct MultiPartFormData {
     
     let boundary = "Boundary-\(UUID().uuidString)"
     public var headers: [String: String] {
-        ["Content-type": "multipart/form-data; boundary=\(boundary)"]
+        ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
     }
     
     public func bodyData(
