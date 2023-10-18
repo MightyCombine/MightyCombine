@@ -11,6 +11,7 @@ import Combine
 extension URLSession: URLSessionable {
     
     public static var printLog: Bool = false
+    public static var logStyle: LogStyle = .json
     
     public static let mockSession = MockURLSession()
     
@@ -18,7 +19,7 @@ extension URLSession: URLSessionable {
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = URLSession.logStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
@@ -43,7 +44,7 @@ extension URLSession: URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = URLSession.logStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
@@ -71,8 +72,4 @@ extension URLSession: URLSessionable {
         .receive(on: scheduler)
         .eraseToAnyPublisher()
     }
-}
-
-public enum DataLogStyle {
-    case json, string
 }
