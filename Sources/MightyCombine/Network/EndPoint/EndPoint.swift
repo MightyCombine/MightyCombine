@@ -19,6 +19,7 @@ public struct EndPoint: EndPointable {
     public var method: HttpMethod
     public var responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     public var session: URLSessionable?
+    public var logStyle: LogStyle
     
     public init(
         _ baseURL: String,
@@ -38,6 +39,7 @@ public struct EndPoint: EndPointable {
         self.method = method
         self.responseHandler = responseHandler
         self.session = session
+        self.logStyle = URLSession.logStyle
     }
     
     public var urlRequest: URLRequest {
