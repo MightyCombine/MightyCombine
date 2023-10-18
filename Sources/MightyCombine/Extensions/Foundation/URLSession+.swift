@@ -11,7 +11,8 @@ import Combine
 extension URLSession: URLSessionable {
     
     public static var printLog: Bool = false
-    public static var logStyle: LogStyle = .json
+    public static var requestLogStyle: LogStyle = .json
+    public static var responseLogStyle: LogStyle = .json
     
     public static let mockSession = MockURLSession()
     
@@ -19,16 +20,17 @@ extension URLSession: URLSessionable {
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
-        logStyle: LogStyle = URLSession.logStyle,
+        requestLogStyle: LogStyle = URLSession.requestLogStyle,
+        responseLogStyle: LogStyle = URLSession.responseLogStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
-        printRequestLog(urlRequest, logStyle: logStyle)
+        printRequestLog(urlRequest, logStyle: requestLogStyle)
         return self.dataTaskPublisher(for: urlRequest)
             .tryMap { (data, response) -> Data in
                 if let response = response as? HTTPURLResponse {
                     self.printResponseLog(
-                        response, data: data, logStyle: logStyle
+                        response, data: data, logStyle: responseLogStyle
                     )
                     try responseHandler?(response)
                 }
@@ -44,17 +46,18 @@ extension URLSession: URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: LogStyle = URLSession.logStyle,
+        requestLogStyle: LogStyle = URLSession.requestLogStyle,
+        responseLogStyle: LogStyle = URLSession.responseLogStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
-        printRequestLog(request, logStyle: logStyle)
+        printRequestLog(request, logStyle: requestLogStyle)
         return Future<T, Error> { promise in
             self.uploadTask(with: request, from: bodyData) { data, response, error in
                 do {
                     if let response = response as? HTTPURLResponse {
                         self.printResponseLog(
-                            response, data: data, logStyle: logStyle
+                            response, data: data, logStyle: responseLogStyle
                         )
                         try responseHandler?(response)
                     }

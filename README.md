@@ -149,13 +149,15 @@ let mockSession = MockURLSession(response: response)
 ✅ printLog
 URLSession.printLog = true
 ✅ logStyle
-URLSession.logStyle = .string
+URLSession.requestLogStyle = .string
+URLSession.responseLogStyle = .string
 
 EndPoint
     .init(basURL)
     .urlPaths(paths)
     ✅ logStyle for each endpoint
-    .logStyle(.none) // will not print body 
+    .requestLogStyle(.json) // request data will print pretty json  
+    .responseLogStyle(.non) // will not print body 
     .requestPublisher(expect: User.self)
 ```
 

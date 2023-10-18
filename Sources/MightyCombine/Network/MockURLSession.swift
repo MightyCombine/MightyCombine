@@ -11,7 +11,8 @@ import Combine
 public struct MockURLSession: URLSessionable {
     
     public static var printLog: Bool = false
-    public static var logStyle: LogStyle = .json
+    public static var requestLogStyle: LogStyle = .json
+    public static var responseLogStyle: LogStyle = .json
     
     var response: HTTPURLResponse?
     
@@ -32,7 +33,8 @@ extension MockURLSession {
     public func requestPublisher<T>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
-        logStyle: LogStyle = MockURLSession.logStyle,
+        requestLogStyle: LogStyle = MockURLSession.requestLogStyle,
+        responseLogStyle: LogStyle = MockURLSession.responseLogStyle,
         scheduler: DispatchQueue = DispatchQueue.main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> where T : Decodable {
@@ -58,7 +60,8 @@ extension MockURLSession {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: LogStyle = MockURLSession.logStyle,
+        requestLogStyle: LogStyle = MockURLSession.requestLogStyle,
+        responseLogStyle: LogStyle = MockURLSession.responseLogStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {

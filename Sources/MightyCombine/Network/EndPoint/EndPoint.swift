@@ -10,6 +10,7 @@ import MightySwift
 import Combine
 
 public struct EndPoint: EndPointable {
+    
 
     public let baseURL: String
     public var paths: [String]?
@@ -19,7 +20,9 @@ public struct EndPoint: EndPointable {
     public var method: HttpMethod
     public var responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     public var session: URLSessionable?
-    public var logStyle: LogStyle
+    
+    public var requestLogStyle: LogStyle
+    public var responseLogStyle: LogStyle
     
     public init(
         _ baseURL: String,
@@ -39,7 +42,8 @@ public struct EndPoint: EndPointable {
         self.method = method
         self.responseHandler = responseHandler
         self.session = session
-        self.logStyle = URLSession.logStyle
+        self.requestLogStyle = URLSession.requestLogStyle
+        self.responseLogStyle = URLSession.responseLogStyle
     }
     
     public var urlRequest: URLRequest {
