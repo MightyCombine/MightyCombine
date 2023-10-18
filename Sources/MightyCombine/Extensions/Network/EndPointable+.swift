@@ -57,7 +57,7 @@ public extension EndPointable {
     
     func requestPublisher<T: Decodable>(
         expect type: T.Type,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = .json,
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
@@ -75,7 +75,7 @@ public extension EndPointable {
     func uploadPublisher<T: Decodable>(
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = .json,
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {

@@ -148,13 +148,15 @@ let mockSession = MockURLSession(response: response)
 ```swift
 ✅ printLog
 URLSession.printLog = true
+✅ logStyle
+URLSession.logStyle = .string
 
 EndPoint
     .init(basURL)
     .urlPaths(paths)
     .requestPublisher(
         expect: User.self,
-        ✅ logStyle Default = .json
+        ✅ logStyle for each endpoint
         logStyle: .string
     )
 ```

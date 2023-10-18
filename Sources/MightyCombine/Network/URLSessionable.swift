@@ -11,12 +11,13 @@ import Combine
 public protocol URLSessionable {
     
     static var printLog: Bool { get }
+    static var logStyle: LogStyle { get }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type?,
-        logStyle: DataLogStyle,
+        logStyle: LogStyle,
         scheduler: DispatchQueue,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
@@ -26,7 +27,7 @@ public protocol URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type?,
-        logStyle: DataLogStyle,
+        logStyle: LogStyle,
         scheduler: DispatchQueue,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)?
     ) -> AnyPublisher<T, Error>
@@ -34,8 +35,9 @@ public protocol URLSessionable {
 
 public extension URLSessionable {
     
-    func printRequestLog(_ request: URLRequest, logStyle: DataLogStyle) {
+    func printRequestLog(_ request: URLRequest, logStyle: LogStyle) {
         #if DEBUG
+        guard Self.printLog else { return }
         var body: Any?
         if let data = request.httpBody {
             switch logStyle {
@@ -56,8 +58,9 @@ public extension URLSessionable {
         #endif
     }
     
-    func printResponseLog(_ response: HTTPURLResponse, data: Data?, logStyle: DataLogStyle) {
+    func printResponseLog(_ response: HTTPURLResponse, data: Data?, logStyle: LogStyle) {
         #if DEBUG
+        guard Self.printLog else { return }
         var body: Any?
         if let data = data {
             switch logStyle {
@@ -81,7 +84,7 @@ public extension URLSessionable {
     func requestPublisher<T: Decodable>(
         _ urlRequest: URLRequest,
         expect: T.Type? = nil,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = Self.logStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
@@ -99,7 +102,7 @@ public extension URLSessionable {
         for request: URLRequest,
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: DataLogStyle = .json,
+        logStyle: LogStyle = Self.logStyle,
         scheduler: DispatchQueue = .main,
         responseHandler: ((_ response: HTTPURLResponse) throws -> Void)? = nil
     ) -> AnyPublisher<T, Error> {
@@ -112,4 +115,8 @@ public extension URLSessionable {
             responseHandler: responseHandler
         )
     }
+}
+
+public enum LogStyle {
+    case json, string
 }
