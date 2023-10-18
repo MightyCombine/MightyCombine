@@ -45,6 +45,8 @@ public extension URLSessionable {
                 body = try? JSONSerialization.jsonObject(with: data)
             case .string:
                 body = String(data: data, encoding: .utf8)
+            case .none:
+                body = nil
             }
         }
         let log = """
@@ -68,6 +70,8 @@ public extension URLSessionable {
                 body = try? JSONSerialization.jsonObject(with: data)
             case .string:
                 body = String(data: data, encoding: .utf8)
+            case .none:
+                body = nil
             }
         }
         let log = """
@@ -118,5 +122,5 @@ public extension URLSessionable {
 }
 
 public enum LogStyle {
-    case json, string
+    case json, string, none
 }
