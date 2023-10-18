@@ -154,11 +154,9 @@ URLSession.logStyle = .string
 EndPoint
     .init(basURL)
     .urlPaths(paths)
-    .requestPublisher(
-        expect: User.self,
-        ✅ logStyle for each endpoint
-        logStyle: .string
-    )
+    ✅ logStyle for each endpoint
+    .logStyle(.none) // will not print body 
+    .requestPublisher(expect: User.self)
 ```
 
 ## ✔ Support URLRequest

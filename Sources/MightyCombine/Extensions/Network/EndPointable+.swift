@@ -55,9 +55,14 @@ public extension EndPointable {
         return new
     }
     
+    func logStyle(_ style: LogStyle) -> Self {
+        var new = self
+        new.logStyle = style
+        return new
+    }
+    
     func requestPublisher<T: Decodable>(
         expect type: T.Type,
-        logStyle: LogStyle = .json,
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
@@ -66,7 +71,7 @@ public extension EndPointable {
         
         return session.requestPublisher(
             self.urlRequest,
-            logStyle: logStyle,
+            logStyle: self.logStyle,
             scheduler: scheduler,
             responseHandler: responseHandler
         )
@@ -75,7 +80,6 @@ public extension EndPointable {
     func uploadPublisher<T: Decodable>(
         from bodyData: Data,
         expect: T.Type? = nil,
-        logStyle: LogStyle = .json,
         scheduler: DispatchQueue = .main,
         with sesssion: URLSessionable = URLSession.shared
     ) -> AnyPublisher<T, Error> {
@@ -86,7 +90,7 @@ public extension EndPointable {
             for: self.urlRequest,
             from: bodyData,
             expect: expect,
-            logStyle: logStyle,
+            logStyle: self.logStyle,
             scheduler: scheduler,
             responseHandler: self.responseHandler
         )
