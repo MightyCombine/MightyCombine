@@ -55,9 +55,15 @@ public extension EndPointable {
         return new
     }
     
-    func logStyle(_ style: LogStyle) -> Self {
+    func requestLogStyle(_ style: LogStyle) -> Self {
         var new = self
-        new.logStyle = style
+        new.requestLogStyle = style
+        return new
+    }
+    
+    func responseLogStyle(_ style: LogStyle) -> Self {
+        var new = self
+        new.responseLogStyle = style
         return new
     }
     
@@ -71,7 +77,8 @@ public extension EndPointable {
         
         return session.requestPublisher(
             self.urlRequest,
-            logStyle: self.logStyle,
+            requestLogStyle: self.requestLogStyle,
+            responseLogStyle: self.responseLogStyle,
             scheduler: scheduler,
             responseHandler: responseHandler
         )
@@ -90,7 +97,8 @@ public extension EndPointable {
             for: self.urlRequest,
             from: bodyData,
             expect: expect,
-            logStyle: self.logStyle,
+            requestLogStyle: self.requestLogStyle,
+            responseLogStyle: self.responseLogStyle,
             scheduler: scheduler,
             responseHandler: self.responseHandler
         )
