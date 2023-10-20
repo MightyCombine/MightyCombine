@@ -10,8 +10,25 @@ import Foundation
 public struct MultiPartFormData {
     
     let boundary = "Boundary-\(UUID().uuidString)"
+  
+    var data: Data = Data()
+    var parameters: [String: Any] = [:]
+    var name: String = ""
+    var filename: String = ""
+    var mimeType: String = ""
+
     public var headers: [String: String] {
         ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+    }
+    
+    var bodyData: Data {
+        self.bodyData(
+            data: self.data,
+            parameters: self.parameters,
+            name: self.name,
+            filename: self.filename,
+            mimeType: self.mimeType
+        )
     }
     
     public func bodyData(
