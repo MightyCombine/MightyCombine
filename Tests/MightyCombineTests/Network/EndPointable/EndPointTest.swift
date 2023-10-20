@@ -35,7 +35,7 @@ final class EndPointTest: XCTestCase {
     }
     
     // Then
-    func test_AbosoluteUrlString() throws {
+    func test_AbosoluteUrlString() {
         
         guard let absoluteUrl = request.url?.absoluteString else { return }
         

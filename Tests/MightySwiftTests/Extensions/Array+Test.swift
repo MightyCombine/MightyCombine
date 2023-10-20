@@ -12,7 +12,7 @@ import XCTest
 final class Array_Test: XCTestCase {
 
     // func find<T: Equatable>(_ keyPath: KeyPath<Element, T>, value: T?) -> Element?
-    func test_func_find() throws {
+    func test_func_find() {
         
         // Given
         let users: [User] = [

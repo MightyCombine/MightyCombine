@@ -14,7 +14,7 @@ final class AnyPublisher_Test: XCTestCase {
     
     var store = Set<AnyCancellable>()
 
-    func test_func_inject() throws {
+    func test_func_inject() {
         
         let expectInt = 123
         

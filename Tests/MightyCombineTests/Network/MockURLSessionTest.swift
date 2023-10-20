@@ -14,7 +14,7 @@ final class MockURLSessionTest: XCTestCase {
     
     var store = Set<AnyCancellable>()
     
-    func test_StatusCode500이니까_Error를_반환하는_경우() {
+    func test_StatusCode500이니까_Error를_반환하는_경우() async {
         
         // Given
         let url = URL(string: "https://api.github.com/users/octopus")!
@@ -26,17 +26,14 @@ final class MockURLSessionTest: XCTestCase {
         )
         let sut = MockURLSession(response: response)
         
-        Task {
-            
-            //  When
-            let user: User? = try? await sut.requestPublisher(.init(url: url)) {
-                guard (200...299).contains($0.statusCode) else {
-                    throw NSError(domain: "Bad StatusCode", code: $0.statusCode)
-                }
-            }.asyncThrows
-            
-            // Then
-            XCTAssertNil(user)
-        }
+        //  When
+        let user: User? = try? await sut.requestPublisher(.init(url: url)) {
+            guard (200...299).contains($0.statusCode) else {
+                throw NSError(domain: "Bad StatusCode", code: $0.statusCode)
+            }
+        }.asyncThrows
+        
+        // Then
+        XCTAssertNil(user)
     }
 }

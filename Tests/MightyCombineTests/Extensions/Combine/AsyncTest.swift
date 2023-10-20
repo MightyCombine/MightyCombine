@@ -12,13 +12,11 @@ import Combine
 
 final class AsyncTest: XCTestCase {
 
-    func test_Just() {
-        Task {
-            let result = await Just(1)
-                .receive(on: DispatchQueue.main)
-                .async
-            
-            XCTAssertEqual(result, 1)
-        }
+    func test_Just() async {
+        let result = await Just(1)
+            .receive(on: DispatchQueue.main)
+            .async
+        
+        XCTAssertEqual(result, 1)
     }
 }

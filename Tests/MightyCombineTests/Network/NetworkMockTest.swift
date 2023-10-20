@@ -8,33 +8,29 @@ final class NetworkMockTest: XCTestCase {
     // Given
     let sut: UserNetwork = .init()
     
-    func test_injectFail() throws {
+    func test_injectFail() async {
         
         sut.getUser = { _ in .inject(.failure(NSError())) }
         
-        Task {
-            // When
-            let user = try? await sut.getUser("octopus").asyncThrows
-            
-            // Then
-            XCTAssertNil(user)
-        }
+        // When
+        let user = try? await sut.getUser("octopus").asyncThrows
+        
+        // Then
+        XCTAssertNil(user)
     }
     
-    func test_injectSuccess() throws {
+    func test_injectSuccess() async {
         
         let mockData = User(id: 112233, login: "octopus")
         sut.getUser = { _ in .inject(.success(mockData)) }
         
-        Task {
-            // When
-            let user = try? await sut.getUser("octopus").asyncThrows
-            
-            // Then
-            XCTAssertNotNil(user)
-            if let user {
-                XCTAssertEqual(mockData.id, user.id)
-            }
+        // When
+        let user = try? await sut.getUser("octopus").asyncThrows
+        
+        // Then
+        XCTAssertNotNil(user)
+        if let user {
+            XCTAssertEqual(mockData.id, user.id)
         }
     }
 }

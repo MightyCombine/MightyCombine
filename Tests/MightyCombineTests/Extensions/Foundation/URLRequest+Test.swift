@@ -16,7 +16,7 @@ final class URLRequest_Test: XCTestCase {
     let urlRequest = URLRequest(url: .init(string: "https://api.github.com/users/octocat")!)
     var store = Set<AnyCancellable>()
 
-    func test_func_request() throws {
+    func test_func_request() {
         
         let mock = User(id: 123, login: "octocat")
         
