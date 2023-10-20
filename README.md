@@ -123,14 +123,12 @@ let sut: UserNetwork = .init()
 ✅ inject fail
 sut.getUser = { _ in .inject(.failure(NSError())) }
 
-Task {
-    // When
-    ✅ asyncThrows
-    let user = try? await sut.getUser("octopus").asyncThrows
-    
-    // Then
-    XCTAssertNil(user)
-}
+// When
+✅ asyncThrows
+let user = try? await sut.getUser("octopus").asyncThrows
+
+// Then
+XCTAssertNil(user)
 ```
 
 ```swift 
@@ -139,18 +137,16 @@ let sut: UserNetwork = .init()
 let mockData = User(login: "octopus", id: 112233)
 ✅ inject success
 sut.getUser = { _ in .inject(.success(mockData)) }
-
-Task {
-    // When
-    ✅ asyncThrows
-    let user = try? await sut.getUser("octopus").asyncThrows 
     
-    // Then
-    XCTAssertNotNil(user)
-    if let user {
-        XCTAssertEqual(mockData.id, user.id)
-    }
-}
+// When
+✅ asyncThrows
+let user = try? await sut.getUser("octopus").asyncThrows 
+
+// Then
+XCTAssertNotNil(user)
+if let user {
+    XCTAssertEqual(mockData.id, user.id)
+}       
 ```
 
 ```swift
