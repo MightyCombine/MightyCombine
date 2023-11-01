@@ -239,3 +239,11 @@ let urlRequest = URLRequest
     // .requestPublisher
 ```
 
+## ✔ SelfReturnable
+```swift
+final class DefaultViewController: UIViewController, SelfReturnable { }
+
+    let controller = DefaultViewController()
+        .with(\.title, "Hello")
+        .with(\.hidesBottomBarWhenPushed, true)
+```
