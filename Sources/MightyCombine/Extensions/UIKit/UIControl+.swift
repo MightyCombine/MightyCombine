@@ -16,9 +16,9 @@ public extension UIControl {
     }
 }
 
-public extension UIControl {
+extension UIControl {
     
-    struct EventPublisher: Publisher {
+    public struct EventPublisher: Publisher {
         
         public typealias Output = UIControl
         public typealias Failure = Never
@@ -46,7 +46,7 @@ public extension UIControl {
             control.addTarget(self, action: #selector(handleEvent), for: event)
         }
         
-        func request(_ demand: Subscribers.Demand) {}
+        func request(_ demand: Subscribers.Demand) { }
         
         func cancel() {
             subscriber = nil

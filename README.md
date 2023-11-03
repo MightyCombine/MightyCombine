@@ -206,6 +206,18 @@ textField.textPublisher
     .sink { text in
         print(text)
     }.store(in: &store)
+
+✅ controlPublisher
+tableRefresh.controlPublisher(for: .valueChanged)
+    .sink { _ in
+        print("Pulled")
+    }.store(in: &store)
+
+✅ tapGesturePublisher    
+uiView.tapGesturePublisher
+    .sink { _ in 
+        print("Tap")
+    }.store(in: &store)
 ```
 
 # 💪 MightySwift
