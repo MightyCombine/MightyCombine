@@ -11,12 +11,17 @@ import UIKit
 
 public extension UIView {
     
-    var tapGesturePublisher: TapGesturePublisher { .init(view: self) }
+    var tapGesturePublisher: AnyPublisher<Void, Never> {
+        TapGesturePublisher(view: self)
+            .subscribe(on: DispatchQueue.main)
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
 }
 
-extension UIView {
+fileprivate extension UIView {
     
-    public struct TapGesturePublisher: Publisher {
+    struct TapGesturePublisher: Publisher {
         
         public typealias Output = UITapGestureRecognizer
         public typealias Failure = Never
@@ -31,7 +36,7 @@ extension UIView {
         }
     }
     
-    fileprivate class TapGestureRecognizer: UITapGestureRecognizer {
+    class TapGestureRecognizer: UITapGestureRecognizer {
         
         let tapped = PassthroughSubject<UITapGestureRecognizer, Never>()
         
@@ -46,7 +51,7 @@ extension UIView {
     }
 
 
-    fileprivate class TapGestureSubscription<S: Subscriber>: Subscription where S.Input == UITapGestureRecognizer, S.Failure == Never {
+    class TapGestureSubscription<S: Subscriber>: Subscription where S.Input == UITapGestureRecognizer, S.Failure == Never {
         
         private var subscriber: S?
         private var gesture: TapGestureRecognizer?
