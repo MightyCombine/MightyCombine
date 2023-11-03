@@ -206,6 +206,12 @@ textField.textPublisher
     .sink { text in
         print(text)
     }.store(in: &store)
+
+✅ controlPublisher
+tableRefresh.controlPublisher(for: .valueChanged)
+    .sink { _ in
+        print("Pulled")
+    }.store(in: &store)
 ```
 
 # 💪 MightySwift
