@@ -96,4 +96,24 @@ final class Publisher_Test: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
+    
+    func test_withUnretained() {
+        
+        let expectation = XCTestExpectation(description: "withUnretained should not create a strong reference")
+
+        // Initialize the controller and optional weak reference
+        let controller = UIViewController()
+        weak var weakController: UIViewController? = controller
+        
+        Just(10)
+            .receive(on: DispatchQueue.main)
+            .withUnretained(controller)
+            .sink { (self, value) in
+                XCTAssertNotNil(self)
+                expectation.fulfill()
+            }.store(in: &store)
+        
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertNotNil(weakController)
+    }
 }
