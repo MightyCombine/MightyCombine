@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 public extension UISwitch {
-    var onOffPublisher: AnyPublisher<Bool, Never> {
+    var switchPublisher: AnyPublisher<Bool, Never> {
         controlPublisher(for: .valueChanged)
             .map { $0 as! UISwitch }
             .map { $0.isOn }

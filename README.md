@@ -215,8 +215,8 @@ uiView.tapGesturePublisher.sink { _ in
     print("Tap")
 }.store(in: &store)
     
-✅ onOffPublisher
-uiSwitch.onOffPublisher.sink {
+✅ switchPublisher
+uiSwitch.switchPublisher.sink {
     print($0)
 }.store(in: &store)
 ```
