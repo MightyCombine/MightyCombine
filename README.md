@@ -95,28 +95,6 @@ EndPoint
         
     }.store(in: &store)
 ```
-```swift
-let formData = MultiPartFormData()
-    .data(data)
-    .filename("imagename.png")
-    .name("image")
-    .mimeType("image/png")
-    .parameters(parameters)
-
-EndPoint
-    .init(basURL)
-    .urlPaths(paths)
-    .httpMethod(.post)
-    .uploadPublisher(
-        formData: formData,
-        expect: Response.self
-    )
-    .sink { _ in
-        
-    } receiveValue: { rseponse in
-        
-    }.store(in: &store)
-```
 
 ## ✔ Support XCTest
 ```swift
