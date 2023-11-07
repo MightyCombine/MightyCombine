@@ -103,28 +103,4 @@ public extension EndPointable {
             responseHandler: self.responseHandler
         )
     }
-    
-    func uploadPublisher<T: Decodable>(
-        formData multipartFormData: MultiPartFormData,
-        expect: T.Type? = nil,
-        scheduler: DispatchQueue = .main,
-        with sesssion: URLSessionable = URLSession.shared
-    ) -> AnyPublisher<T, Error> {
-        
-        let session = self.session ?? sesssion
-        
-        var newHeaders = self.headers
-        newHeaders?["Content-Type"] = multipartFormData.headers["Content-Type"]
-        let newEndpoint = self.httpHeaders(newHeaders)
-        
-        return session.uploadPublisher(
-            for: newEndpoint.urlRequest,
-            from: multipartFormData.bodyData,
-            expect: expect,
-            requestLogStyle: newEndpoint.requestLogStyle,
-            responseLogStyle: newEndpoint.responseLogStyle,
-            scheduler: scheduler,
-            responseHandler: newEndpoint.responseHandler
-        )
-    }
 }
