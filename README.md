@@ -196,28 +196,29 @@ URLRequest(url: url)
 ## ✔ Support UIKit
 ```swift 
 ✅ eventPublisher
-button.eventPublisher(for: .touchUpInside)
-    .sink { _ in
-        print("TAP")
-    }.store(in: &store)
+button.eventPublisher(for: .touchUpInside).sink { _ in
+    print("TAP")
+}.store(in: &store)
     
 ✅ textPublisher
-textField.textPublisher
-    .sink { text in
-        print(text)
-    }.store(in: &store)
+textField.textPublisher.sink { text in
+    print(text)
+}.store(in: &store)
 
 ✅ controlPublisher
-tableRefresh.controlPublisher(for: .valueChanged)
-    .sink { _ in
-        print("Pulled")
-    }.store(in: &store)
+tableRefresh.controlPublisher(for: .valueChanged).sink { _ in
+    print("Pulled")
+}.store(in: &store)
 
 ✅ tapGesturePublisher    
-uiView.tapGesturePublisher
-    .sink { _ in 
-        print("Tap")
-    }.store(in: &store)
+uiView.tapGesturePublisher.sink { _ in 
+    print("Tap")
+}.store(in: &store)
+    
+✅ onOffPublisher
+uiSwitch.onOffPublisher.sink {
+    print($0)
+}.store(in: &store)
 ```
 
 # 💪 MightySwift
