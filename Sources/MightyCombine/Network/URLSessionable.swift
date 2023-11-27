@@ -13,6 +13,7 @@ public protocol URLSessionable {
     static var printLog: Bool { get }
     static var requestLogStyle: LogStyle { get }
     static var responseLogStyle: LogStyle { get }
+    static var decoder: JSONDecoder { get }
     
     @available(macOS 10.15, *)
     func requestPublisher<T: Decodable>(

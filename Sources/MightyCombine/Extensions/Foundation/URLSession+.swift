@@ -9,10 +9,12 @@ import Foundation
 import Combine
 
 extension URLSession: URLSessionable {
-    
+
     public static var printLog: Bool = false
     public static var requestLogStyle: LogStyle = .json
     public static var responseLogStyle: LogStyle = .json
+    
+    public static var decoder: JSONDecoder = JSONDecoder()
     
     public static let mockSession = MockURLSession()
     
@@ -36,7 +38,7 @@ extension URLSession: URLSessionable {
                 }
                 return data
             }
-            .decode(type: T.self, decoder: JSONDecoder())
+            .decode(type: T.self, decoder: Self.decoder)
             .receive(on: scheduler)
             .eraseToAnyPublisher()
     }
@@ -64,7 +66,7 @@ extension URLSession: URLSessionable {
                     if let error = error {
                         throw error
                     } else if let data = data {
-                        let decodedData = try JSONDecoder().decode(T.self, from: data)
+                        let decodedData = try Self.decoder.decode(T.self, from: data)
                         promise(.success(decodedData))
                     }
                 } catch {
