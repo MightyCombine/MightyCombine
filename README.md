@@ -172,7 +172,7 @@ URLRequest(url: url)
 ```
 
 ## ✔ Config JSONDecoder
-```
+```swift
 let decoder = JSONDecoder()
 decoder.keyDecodingStrategy = .keyDecodingStrategy
 
