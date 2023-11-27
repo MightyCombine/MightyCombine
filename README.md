@@ -171,6 +171,14 @@ URLRequest(url: url)
     }.store(in: &store)
 ```
 
+## ✔ Config JSONDecoder
+```
+let decoder = JSONDecoder()
+decoder.keyDecodingStrategy = .keyDecodingStrategy
+
+URLSession.decoder = decoder 
+```
+
 ## ✔ Support UIKit
 ```swift 
 ✅ eventPublisher
