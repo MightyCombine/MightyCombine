@@ -14,12 +14,8 @@ public struct MockURLSession: URLSessionable {
     public static var requestLogStyle: LogStyle = .json
     public static var responseLogStyle: LogStyle = .json
     
-    public static var decoder: JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }
-    
+    public static var decoder: JSONDecoder = JSONDecoder()
+        
     var response: HTTPURLResponse?
     
     public init(response: HTTPURLResponse? = nil) {
