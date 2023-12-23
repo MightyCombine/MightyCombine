@@ -12,29 +12,15 @@ public extension Publisher {
     
     var asyncResult: Result<Output, Error> {
         get async {
-            await withCheckedContinuation { continuation in
-                var cancellable: AnyCancellable?
-                var finishedWithoutValue = true
-                cancellable = first()
-                    .sink(receiveCompletion: { compltion in
-                        switch compltion {
-                        case .finished:
-                            if finishedWithoutValue {
-                                let error = AnyPublisherError.finishedWithoutValue
-                                continuation.resume(returning: .failure(error))
-                            }
-                        case .failure(let error):
-                            continuation.resume(returning: .failure(error))
-                        }
-                        cancellable?.cancel()
-                    }, receiveValue: { value in
-                        finishedWithoutValue = false
-                        continuation.resume(returning: .success(value))
-                    })
+            do {
+                let value = try await self.asyncThrows
+                return .success(value)
+            } catch {
+                return .failure(error)
             }
         }
     }
-    
+
     func mapToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
         map(Result.success)
             .catch { Just(.failure($0)) }
@@ -47,7 +33,7 @@ public extension Publisher {
             return (object, output)
         }
     }
-    
+
     var asyncThrows: Output {
         get async throws {
             try await withCheckedThrowingContinuation { continuation in

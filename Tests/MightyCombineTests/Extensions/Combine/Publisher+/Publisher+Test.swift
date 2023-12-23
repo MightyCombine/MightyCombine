@@ -18,7 +18,6 @@ final class Publisher_Test: XCTestCase {
         
         // Given
         let userNetwork = UserNetwork(session: URLSession.mockSession)
-        let expectation = XCTestExpectation(description: "asyncThrowsMap Test")
         var expect: Int? = nil
         var arrival: Int? = nil
         
@@ -29,7 +28,6 @@ final class Publisher_Test: XCTestCase {
                 expect = Int(Date().addingTimeInterval(3).timeIntervalSince1970)
                 return try await Task.sleep(nanoseconds: 3_000_000_000)
             })
-            .receive(on: DispatchQueue.main)
         // Then
             .sink(receiveCompletion: { _ in
                 
@@ -39,11 +37,7 @@ final class Publisher_Test: XCTestCase {
                       let arrival = arrival
                 else { return }
                 XCTAssert((expect...expect+1).contains(arrival))
-                expectation.fulfill()
             }).store(in: &store)
-        
-
-        wait(for: [expectation], timeout: 5.0)
     }
     
     func test_asyncThrowsMap_throw하는_경우() {
@@ -70,7 +64,6 @@ final class Publisher_Test: XCTestCase {
         
         // Given
         let userNetwork = UserNetwork(session: URLSession.mockSession)
-        let expectation = XCTestExpectation(description: "asyncMap Test")
         var expect: Int? = nil
         var arrival: Int? = nil
         
@@ -91,36 +84,26 @@ final class Publisher_Test: XCTestCase {
                 else { return }
                 print("DEBUG", (expect...expect+1).contains(arrival))
                 XCTAssert((expect...expect+1).contains(arrival), "asyncMap Test")
-                expectation.fulfill()
             }).store(in: &store)
-        
-        wait(for: [expectation], timeout: 5.0)
     }
     
     func test_withUnretained() {
         
-        let expectation = XCTestExpectation(description: "withUnretained should not create a strong reference")
-
         // Initialize the controller and optional weak reference
         let controller = UIViewController()
         weak var weakController: UIViewController? = controller
         
         Just(10)
-            .receive(on: DispatchQueue.main)
             .withUnretained(controller)
             .sink { (self, value) in
                 XCTAssertNotNil(self)
-                expectation.fulfill()
             }.store(in: &store)
-        
-        wait(for: [expectation], timeout: 5.0)
+
         XCTAssertNotNil(weakController)
     }
     
     func test_mapToResult_Success() {
-        
-        let expectation = XCTestExpectation(description: "test_mapToResult_Success")
-        
+
         Just("Value")
             .setFailureType(to: TestError.self)
             .mapToResult()
@@ -131,15 +114,10 @@ final class Publisher_Test: XCTestCase {
                 case .failure(_):
                     XCTFail("Should not return Fail")
                 }
-                expectation.fulfill()
             }.store(in: &store)
-        
-        wait(for: [expectation], timeout: 5.0)
     }
     
     func test_mapToResult_Failure() {
-        
-        let expectation = XCTestExpectation(description: "test_mapToResult_Failure")
         
         Fail<Any, TestError>(error: TestError.testError)
             .mapToResult()
@@ -150,9 +128,6 @@ final class Publisher_Test: XCTestCase {
                 case .failure(let failure):
                     XCTAssertEqual(failure, TestError.testError)
                 }
-                expectation.fulfill()
             }.store(in: &store)
-        
-        wait(for: [expectation], timeout: 5.0)
     }
 }

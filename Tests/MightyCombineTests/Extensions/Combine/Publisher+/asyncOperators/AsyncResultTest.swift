@@ -13,8 +13,8 @@ import Combine
 final class AsyncResultTest: XCTestCase {
 
     func test_Success() async {
-        let result = await Just("Value")
-            .asyncResult
+        
+        let result = await Just("Value").asyncResult
         
         switch result {
         case .success(let success):
