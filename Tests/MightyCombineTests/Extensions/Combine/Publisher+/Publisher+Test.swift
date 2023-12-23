@@ -116,4 +116,43 @@ final class Publisher_Test: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         XCTAssertNotNil(weakController)
     }
+    
+    func test_mapToResult_Success() {
+        
+        let expectation = XCTestExpectation(description: "test_mapToResult_Success")
+        
+        Just("Value")
+            .setFailureType(to: TestError.self)
+            .mapToResult()
+            .sink { result in
+                switch result {
+                case .success(let success):
+                    XCTAssertEqual(success, "Value")
+                case .failure(_):
+                    XCTFail("Should not return Fail")
+                }
+                expectation.fulfill()
+            }.store(in: &store)
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func test_mapToResult_Failure() {
+        
+        let expectation = XCTestExpectation(description: "test_mapToResult_Failure")
+        
+        Fail<Any, TestError>(error: TestError.testError)
+            .mapToResult()
+            .sink { result in
+                switch result {
+                case .success(_):
+                    XCTFail("Should not return Success")
+                case .failure(let failure):
+                    XCTAssertEqual(failure, TestError.testError)
+                }
+                expectation.fulfill()
+            }.store(in: &store)
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
 }
