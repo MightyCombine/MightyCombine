@@ -9,7 +9,7 @@
 
 > Support Network, Log, Functional, Asynchronous, Endpoint and more
 
-## ✔ Support asyncMap and asyncThrowsMap
+## ✔ Support Operaters
 ```swift 
 Just("Value")
     ✅ asyncMap
@@ -32,6 +32,33 @@ Just("Value")
     }, receiveValue: { _ in
         
     }).store(in: &store)
+    
+Just("Value")
+    .setFailureType(to: TestError.self)
+    ✅ mapToResult
+    .mapToResult()
+    .sink { result in
+        switch result {
+        case .success(let success):
+            print(success) // "Value"
+        case .failure(_):
+            
+        }
+        expectation.fulfill()
+    }.store(in: &store)
+    
+Fail<Any, TestError>(error: TestError.testError)
+    ✅ mapToResult
+    .mapToResult()
+    .sink { result in
+        switch result {
+        case .success(_):
+            
+        case .failure(let failure):
+            print(failure) // TestError.testError
+        }
+        expectation.fulfill()
+    }.store(in: &store)
 ```
 
 ## ✔ Support async/ await and throws
@@ -52,6 +79,14 @@ Task {
     ✅ async
     let result = await Just(1).async
     print(result) // 1
+    
+    ✅ asyncResult - Success
+    let result = await Just("Value).asyncResult
+    print(result) // success("Value")
+    
+    ✅ asyncResult - Failure
+    let result = await Fail<Any, TestError>(error: TestError.testError).asyncResult
+    print(result) // failure(TestSource.TestError.testError)
 }
 ```
 
@@ -172,7 +207,7 @@ URLRequest(url: url)
 ```
 
 ## ✔ Config JSONDecoder
-```
+```swift
 let decoder = JSONDecoder()
 decoder.keyDecodingStrategy = .keyDecodingStrategy
 
