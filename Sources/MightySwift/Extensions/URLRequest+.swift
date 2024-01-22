@@ -45,12 +45,9 @@ public extension URLRequest {
         return request
     }
     
-    func httpBody(_ body: [String: Any]?) -> Self {
-        guard let body = body
-        else { return self }
+    func httpBody(_ body: Data?) -> Self {
         var request = self
-        let data = try? JSONSerialization.data(withJSONObject: body, options: [])
-        request.httpBody = data
+        request.httpBody = body
         return request
     }
     
