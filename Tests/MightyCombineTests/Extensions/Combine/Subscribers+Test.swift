@@ -16,7 +16,6 @@ final class Subscribers_Test: XCTestCase {
 
     func test_var_error() throws {
         Fail<Any, TestError>(error: TestError.testError)
-            .receive(on: DispatchQueue.main)
             .sink { completion in
                 let error = completion.error
                 XCTAssertNotNil(error)

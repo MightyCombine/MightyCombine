@@ -13,9 +13,7 @@ import Combine
 final class AsyncTest: XCTestCase {
 
     func test_Just() async {
-        let result = await Just(1)
-            .receive(on: DispatchQueue.main)
-            .async
+        let result = await Just(1).async
         
         XCTAssertEqual(result, 1)
     }
