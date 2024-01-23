@@ -92,7 +92,7 @@ Task {
 
 ## ✔ Support EndPoint
 ```Swift
-✅ EndPoint
+✅ EndPoint - GET
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
@@ -106,6 +106,27 @@ EndPoint
         print(user)
     }.store(in: &store)
 ```
+
+```Swift
+✅ EndPoint - POST
+EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .httpMethod(.post)
+    .httpBody( ✔️ Encodable OR [String: Any] Type ✔️) 
+    ✅ resoinseHandler
+    .responseHandler(handleResponse(_:))
+    ✅ requestPublisher
+    .requestPublisher(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+    
+    // We support the body parameters of the Codable type and the [String: Any] type.
+```
+            
 
 ## ✔ Support File Upload and MultiPartFormData 
 ```swift
