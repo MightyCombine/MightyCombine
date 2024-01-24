@@ -11,7 +11,7 @@ import XCTest
 final class EndPointTest2: XCTestCase {
     
     // Given
-    struct EncodableBody: Codable {
+    struct EncodableTestBody: Codable {
         let id: Int
         let hireable: Bool
     }
@@ -34,7 +34,7 @@ final class EndPointTest2: XCTestCase {
         "hireable": false
     ]
     
-    let encodableBody: EncodableBody = .init(id: 1, hireable: false)
+    let encodableBody: EncodableTestBody = .init(id: 1, hireable: false)
     
     // When
     var request: URLRequest {
@@ -67,7 +67,7 @@ final class EndPointTest2: XCTestCase {
     func test_body() {
         
         guard let bodyData = request.httpBody,
-              let requestBody = try? JSONDecoder().decode(EncodableBody.self, from: bodyData) else {
+              let requestBody = try? JSONDecoder().decode(EncodableTestBody.self, from: bodyData) else {
             XCTFail("Body is empty")
             return
         }

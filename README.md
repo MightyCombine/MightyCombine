@@ -96,7 +96,7 @@ Task {
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
-    ✅ resoinseHandler
+    ✅ responseHandler
     .responseHandler(handleResponse(_:))
     ✅ requestPublisher
     .requestPublisher(expect: User.self)
@@ -109,12 +109,22 @@ EndPoint
 
 ```Swift
 ✅ EndPoint - POST
+struct RequestBody: Encodable {
+  let id: Int
+}
+
+let dictionary = ["id": 123]
+let encodableTypeBody = RequestBody(id: 123)
+
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
     .httpMethod(.post)
-    .httpBody( ✔️ Encodable OR [String: Any] Type ✔️) 
-    ✅ resoinseHandler
+  ✔️ body with Encodable Type
+  .httpBody(encodableTypeBody)
+  ✔️ body with Dictionary
+  .httpBody(dictionary)
+    ✅ responseHandler
     .responseHandler(handleResponse(_:))
     ✅ requestPublisher
     .requestPublisher(expect: User.self)
