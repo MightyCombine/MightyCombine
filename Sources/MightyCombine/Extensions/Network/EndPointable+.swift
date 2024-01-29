@@ -31,7 +31,15 @@ public extension EndPointable {
     
     func httpBody(_ body: [String: Any]?) -> Self {
         var new = self
-        new.body = body
+        let data = try? JSONSerialization.data(withJSONObject: body as Any)
+        new.body = data
+        return new
+    }
+    
+    func httpBody(_ body: Encodable) -> Self {
+        var new = self
+        let data = try? JSONEncoder().encode(body)
+        new.body = data
         return new
     }
     

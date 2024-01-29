@@ -92,11 +92,11 @@ Task {
 
 ## ✔ Support EndPoint
 ```Swift
-✅ EndPoint
+✅ EndPoint - GET
 EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
-    ✅ resoinseHandler
+    ✅ responseHandler
     .responseHandler(handleResponse(_:))
     ✅ requestPublisher
     .requestPublisher(expect: User.self)
@@ -106,6 +106,37 @@ EndPoint
         print(user)
     }.store(in: &store)
 ```
+
+```Swift
+✅ EndPoint - POST
+struct RequestBody: Encodable {
+  let id: Int
+}
+
+let dictionary = ["id": 123]
+let encodableTypeBody = RequestBody(id: 123)
+
+EndPoint
+    .init("https://api.github.com")
+    .urlPaths(["/users", "/octocat"])
+    .httpMethod(.post)
+  ✔️ body with Encodable Type
+  .httpBody(encodableTypeBody)
+  ✔️ body with Dictionary
+  .httpBody(dictionary)
+    ✅ responseHandler
+    .responseHandler(handleResponse(_:))
+    ✅ requestPublisher
+    .requestPublisher(expect: User.self)
+    .sink { _ in
+        
+    } receiveValue: { user in
+        print(user)
+    }.store(in: &store)
+    
+    // We support the body parameters of the Codable type and the [String: Any] type.
+```
+            
 
 ## ✔ Support File Upload and MultiPartFormData 
 ```swift
