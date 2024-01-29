@@ -120,10 +120,10 @@ EndPoint
     .init("https://api.github.com")
     .urlPaths(["/users", "/octocat"])
     .httpMethod(.post)
-  ✔️ body with Encodable Type
-  .httpBody(encodableTypeBody)
-  ✔️ body with Dictionary
-  .httpBody(dictionary)
+    ✔️ body with Encodable Type
+    .httpBody(encodableTypeBody)
+    ✔️ body with Dictionary
+    .httpBody(dictionary)
     ✅ responseHandler
     .responseHandler(handleResponse(_:))
     ✅ requestPublisher
