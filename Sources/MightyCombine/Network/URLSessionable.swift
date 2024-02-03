@@ -1,6 +1,6 @@
 //
 //  URLSessionable.swift
-//  
+//
 //
 //  Created by 김인섭 on 10/5/23.
 //
@@ -47,6 +47,8 @@ public extension URLSessionable {
             switch logStyle {
             case .json:
                 body = try? JSONSerialization.jsonObject(with: data)
+            case .prettyJson:
+                body = data.asPrettyJsonString()
             case .string:
                 body = String(data: data, encoding: .utf8)
             case .none:
@@ -72,6 +74,8 @@ public extension URLSessionable {
             switch logStyle {
             case .json:
                 body = try? JSONSerialization.jsonObject(with: data)
+            case .prettyJson:
+                body = data.asPrettyJsonString()
             case .string:
                 body = String(data: data, encoding: .utf8)
             case .none:
@@ -79,11 +83,11 @@ public extension URLSessionable {
             }
         }
         let log = """
-        🛬 Network Response Log
-            - absoluteURL: \(response.url?.absoluteString ?? "")
-            - statusCode: \(response.statusCode)
-            - data: \(body ?? "")
-        """
+         🛬 Network Response Log
+             - absoluteURL: \(response.url?.absoluteString ?? "")
+             - statusCode: \(response.statusCode)
+             - data: \(body ?? "nil")
+         """
         print(log)
         #endif
     }
@@ -130,5 +134,17 @@ public extension URLSessionable {
 }
 
 public enum LogStyle {
-    case json, string, none
+    case json, prettyJson, string, none
+}
+
+fileprivate extension Data {
+    
+    func asPrettyJsonString() -> String? {
+        let object = try? JSONSerialization.jsonObject(with: self)
+        let prettyJsonData = try? JSONSerialization.data(
+            withJSONObject: object,
+            options: [.prettyPrinted])
+        guard let prettyJsonData else { return .none }
+        return String(data: prettyJsonData, encoding: .utf8)
+    }
 }
