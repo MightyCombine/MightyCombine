@@ -9,19 +9,13 @@ import XCTest
 @testable import TestSource
 
 // public extension Array
-final class Array_Test: XCTestCase {
+final class Array_Find: XCTestCase {
 
     // func find<T: Equatable>(_ keyPath: KeyPath<Element, T>, value: T?) -> Element?
     func test_func_find() {
         
         // Given
-        let users: [User] = [
-            .init(id: 1, login: "A"),
-            .init(id: 2, login: "B"),
-            .init(id: 3, login: "C"),
-            .init(id: 4, login: "D"),
-            .init(id: 5, login: "E")
-        ]
+        let users = User.users
         
         // When
         let userWithId1 = users.find(\.id, value: 1)
