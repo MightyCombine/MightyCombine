@@ -282,7 +282,7 @@ let users: [User] = [.....]
 let user = users.find(\.login, "octocat") // Optional(User(login: "octocat"))
 
 ✅ asnycMap
-let result = await users.asyncMap { await $0.someAsyncTask }
+let result = await users.asyncMap { $0.someAsyncTask }
 ```
 
 ## ✔ Optional Extension 
