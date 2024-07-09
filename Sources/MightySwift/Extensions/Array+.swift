@@ -16,4 +16,15 @@ public extension Array {
     subscript (safe index: Int) -> Element? {
         return indices ~= index ? self[index] : nil
     }
+    
+    func asyncMap<T>(_ transform: (Element) async throws -> T) async rethrows -> [T] {
+        var results = [T]()
+        results.reserveCapacity(self.count)
+        
+        for element in self {
+            try await results.append(transform(element))
+        }
+        
+        return results
+    }
 }

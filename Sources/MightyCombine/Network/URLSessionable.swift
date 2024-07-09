@@ -142,7 +142,7 @@ fileprivate extension Data {
     func asPrettyJsonString() -> String? {
         let object = try? JSONSerialization.jsonObject(with: self)
         let prettyJsonData = try? JSONSerialization.data(
-            withJSONObject: object,
+            withJSONObject: object as Any,
             options: [.prettyPrinted])
         guard let prettyJsonData else { return .none }
         return String(data: prettyJsonData, encoding: .utf8)
