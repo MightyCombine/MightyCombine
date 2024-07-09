@@ -280,6 +280,9 @@ uiSwitch.switchPublisher.sink {
 let users: [User] = [.....]
 ✅ find
 let user = users.find(\.login, "octocat") // Optional(User(login: "octocat"))
+
+✅ asnycMap
+let result = users.asyncMap { await $0.someAsyncTask }
 ```
 
 ## ✔ Optional Extension 
