@@ -140,9 +140,12 @@ public enum LogStyle {
 fileprivate extension Data {
     
     func asPrettyJsonString() -> String? {
-        let object = try? JSONSerialization.jsonObject(with: self)
+        guard let object = try? JSONSerialization.jsonObject(with: self) else {
+            return .none
+        }
+        
         let prettyJsonData = try? JSONSerialization.data(
-            withJSONObject: object as Any,
+            withJSONObject: object,
             options: [.prettyPrinted])
         guard let prettyJsonData else { return .none }
         return String(data: prettyJsonData, encoding: .utf8)
