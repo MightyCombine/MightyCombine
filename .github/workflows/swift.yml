@@ -1,18 +1,44 @@
+# name: XCTest
+
+# on:
+#   push:
+#     branches:
+#         - main
+#         - develop
+
+# jobs:
+#   test-ios:
+
+#     runs-on: macOS-latest
+
+#     steps:
+#     - uses: actions/checkout@v4
+
+#     - name: Run tests on iPhone14
+#       run: xcodebuild test -destination 'name=iPhone 14' -scheme 'MightyCombine-Package'
+
 name: XCTest
 
 on:
   push:
     branches:
-        - main
-        - develop
+      - main
+      - develop
 
 jobs:
   test-ios:
-
     runs-on: macOS-latest
-
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run tests on iPhone14
-      run: xcodebuild test -destination 'name=iPhone 14' -scheme 'MightyCombine-Package'
+    - name: Set up Xcode
+      run: sudo xcode-select -switch /Applications/Xcode.app
+
+    - name: Install dependencies
+      run: swift package resolve
+
+    - name: Clear Derived Data
+      run: rm -rf ~/Library/Developer/Xcode/DerivedData
+
+    - name: Run tests on iPhone 14
+      run: xcodebuild test -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.0' -scheme 'MightyCombine-Package'
